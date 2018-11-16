@@ -10,20 +10,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
+/*
+* This class receives the connection handed off from Listen and creates
+* a thread.
+* */
 
 public class ListenThread extends Thread {
     private Socket socket;
-    String aName; // Hanle connection names
+    String connection; // Hanle connection names
+    Mediator m;
 
 
-    public ListenThread(Socket s) {
-        super("ListenThread");
+
+    ListenThread(Socket s) {
+        super("Client");
         socket = s;
-        aName = "Connection"
+
 
     }
 
@@ -72,12 +77,22 @@ public class ListenThread extends Thread {
                 true); BufferedReader in =
                 new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             Mediator mediate = new Mediator();
+
+            /*
+            * for some reason, chaning this to the variable m, causes a
+            * NullPointer
+             * Exception.*/
             mediate.log("New connection established");
+
             String input, output;
             output = mediate.processIn("Welcome to no brains chat");
             out.println(output);
+            output = mediate.processIn("Please submit your name: ");
+            input = in.readLine();
+            output = mediate.processIn("So your name is " + input);
 
             while ((input = in.readLine()) != null) {
+                // This echoes back to client
                 output = mediate.processIn(input);
                 out.println(output);
                 if(output.equals("Bye"))
@@ -86,7 +101,7 @@ public class ListenThread extends Thread {
             socket.close();
 
         } catch (IOException e) {
-            //log(e.getMessage());
+            m.log(e.getMessage());
         }
     }
 }

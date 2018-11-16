@@ -4,6 +4,13 @@
 
 package org.palczewski.communication.protocol;
 
+import org.palczewski.communication.listen.ListenThread;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +20,8 @@ import java.util.Date;
 * messages back
  * and forth.
  * */
-public class Mediator {
+public class Mediator implements Runnable {
+    private static final String DEFAULT_NAME = "(New client)";
 
     public void log(String msg) {
         /*
@@ -34,6 +42,12 @@ public class Mediator {
     public String processIn(String msg) {
 
         return msg;
+    }
+
+    public void run() {
+
+
+
     }
 
 

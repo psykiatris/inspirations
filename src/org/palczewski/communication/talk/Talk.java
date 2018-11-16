@@ -4,13 +4,12 @@
 
 package org.palczewski.communication.talk;
 
-import org.palczewski.communication.listen.ListenThread;
-import org.palczewski.communication.protocol.Mediator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -20,43 +19,41 @@ import java.net.UnknownHostException;
 *
 * Will log in with the server, etc.
 * */
-public class Talk {
+public class Talk implements Runnable {
     private static final long serialVersionUID = 1L;
-    private Socket socket;
-    private String user;
-    private Mediator mediator;
-    private BufferedReader in;
-    private PrintWriter out;
+    private static final int PORT_NUMBER = 2222;
+    private String name = "Name";
+    private String host = "localhost";
 
-    public static void main(String[] args) {
 
-        String hostName = "localhost";
-        int port = 2222;
+    Talk() {
+        new Thread(this).start();
 
-        try(Socket socket = new Socket(hostName, port); PrintWriter out
-                = new PrintWriter(socket.getOutputStream(), true); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+    }
+
+    public void run() {
+
+
+        try (Socket socket = new Socket(host, PORT_NUMBER); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter out = new PrintWriter(socket.getOutputStream())) {
 
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
-            String fromServer;
-            String fromUser;
+            String input = in.readLine();
+            out.println(stdIn.readLine());
 
-            while((fromServer = in.readLine()) != null) {
-                System.out.println("Server: " + fromServer);
-                if(fromServer.equals("Bye"))
-                    break;
 
-                fromUser = stdIn.readLine();
-                System.out.println("Client: " + fromUser);
-                out.println(fromUser);
+                    } catch(UnknownHostException e){
+                System.out.println("The host is unknown");
+            } catch(ConnectException e){
+                System.out.println("The server is not running.");
+            } catch(IOException e){
+                System.out.println("An IO exception occurred connecting to: " + host);
             }
 
-        } catch (UnknownHostException e) {
-            System.out.println("Unknown host " + hostName);
-        } catch (IOException e) {
-            System.out.println("Error connecting to " + hostName);
-            System.exit(1);
         }
-    }
 
+    public static void main(String[] args) {
+        new Talk();
+
+    }
 }
