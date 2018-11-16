@@ -4,6 +4,7 @@
 
 package org.palczewski.communication.talk;
 
+import org.palczewski.communication.listen.ListenThread;
 import org.palczewski.communication.protocol.Mediator;
 
 import java.io.BufferedReader;

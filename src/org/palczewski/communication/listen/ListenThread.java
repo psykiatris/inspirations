@@ -13,13 +13,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ListenThread extends Thread {
-    private Socket socket = null;
+    private Socket socket;
+    String aName; // Hanle connection names
+
 
     public ListenThread(Socket s) {
         super("ListenThread");
         socket = s;
+        aName = "Connection"
 
     }
 
@@ -36,19 +40,6 @@ public class ListenThread extends Thread {
          * */
     }
 
-    public void log(String msg) {
-        /*
-         * This will log messages regardomg actions, such as connections
-         * to the server, chat, etc. Will be saved to a local log file
-         * */
-        Date time = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy " +
-                "HH:mm:ss");
-        String timeStamp = sdf.format(time);
-        // Print to terminal
-        // Will add file options later
-        System.out.println(timeStamp + msg + "\n");
-    }
 
     public void removeConnection() {
         /*
@@ -80,8 +71,9 @@ public class ListenThread extends Thread {
         try(PrintWriter out = new PrintWriter(socket.getOutputStream(),
                 true); BufferedReader in =
                 new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-            String input, output;
             Mediator mediate = new Mediator();
+            mediate.log("New connection established");
+            String input, output;
             output = mediate.processIn("Welcome to no brains chat");
             out.println(output);
 

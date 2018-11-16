@@ -4,14 +4,15 @@
 
 package org.palczewski.communication.listen;
 
+import org.palczewski.communication.protocol.Mediator;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
 
 /*
-* This is the server, whidch only istends to the port. When it receives
-* connection, it will pass to ListenThread, which handles the
-* communication.
+This is the main point for the server. It simply listens for connections
+. When they are made, it passes it off to the server Thread.
 * */
 public class Listen {
     private static final long serialVersionUID = 1L;
@@ -19,15 +20,23 @@ public class Listen {
 
     public static void main(String[] args) {
         int port = 2222;
-        boolean listening = true;
+        /*
+        * This flag will keep server running. It's a private variable,
+        * unless I will have a different process to shuytdown the server
+         * (such as if maintenance or anything else occurs).
+         * */
+        private boolean listening = true;
 
         // try-with-resources
         try (ServerSocket serverSocket = new ServerSocket(port)) {
 
-            System.out.println("The server has started on port " + port);
+            Mediator m = new Mediator();
+
+            m.log("The server has started on port " + port);
 
             // Endless loop
             while(listening) {
+                // Passes connection to thread.
                 new ListenThread(serverSocket.accept()).start();
 
             }
