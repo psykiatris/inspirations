@@ -43,10 +43,10 @@ public class Listen implements Runnable {
             while(true) {
                 Socket socket = server.accept();
                 log("New connection started");
-                PrintWriter out =
-                        new PrintWriter(socket.getOutputStream());
-                out.println("Welcome to this server");
+                new Mediator(this, socket);
+
             }
+
         } catch (IOException e) {
             log("An exception was caught while listening to port " + PORT_NUMBER);
             log(e.getMessage());

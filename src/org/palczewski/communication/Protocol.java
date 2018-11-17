@@ -7,14 +7,16 @@ package org.palczewski.communication;
 * This class is the language used between server and client.
 * */
 public class Protocol {
-    public static final String REQUEST = "R";   // Request name from client
-    public static final String SUBMIT = "S";    // Submit name from
-    // client to server
-    public static final String CHAT = "C";  // Used to broadcast to all
-    // clients.
-    public static final String QUIT = "Q";  // When client quits server
-    public static final String APPROVE = "A";   // When server accepts
-    // client
-    public static final String REJECT = "r";    ;// when server rejects
-    // client
+
+    // From Listen to Talk
+    public static final String SUBMIT = "S";
+    public static final String ACCEPTED = "A";
+    public static final String REJECTED = "R";
+    public static final String CHAT = "C";
+
+    // From Talk to Listen
+    public static final String NAME = "N";
+    public static final String BROADCAST = "B";
+    public static final String QUIT = "Q";
+
 }

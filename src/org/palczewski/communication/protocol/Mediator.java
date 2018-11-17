@@ -4,16 +4,15 @@
 
 package org.palczewski.communication.protocol;
 
-import org.palczewski.communication.listen.ListenThread;
+import org.palczewski.communication.Protocol;
+import org.palczewski.communication.listen.Listen;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /*
 * This is the go-between (protocol) between Listen and Talk, to relay
@@ -21,34 +20,63 @@ import java.util.Date;
  * and forth.
  * */
 public class Mediator implements Runnable {
-    private static final String DEFAULT_NAME = "(New client)";
 
-    public void log(String msg) {
-        /*
-        * This method manages logging system info to either server or
-        * client.
-        * */
-        Date time = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy " +
-                "HH:mm:ss");
-        String timeStamp = sdf.format(time);
-        // Print to terminal
-        // Will add file options later
-        System.out.println(MessageFormat.format("[{0}]: {1}", timeStamp,
-                msg));
-    }
+    private static final String DEFAULT_NAME = "(New Client)";
+    private Listen server;
+    private PrintWriter out;
+    private BufferedReader in;
+    private Socket socket;
+    private String name = DEFAULT_NAME;
 
-
-    public String processIn(String msg) {
-
-        return msg;
+    public Mediator(Listen listen, Socket skt) {
+        server = listen;
+        socket = skt;
+        new Thread(this).start();
     }
 
     public void run() {
 
+        try {
+
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(),true);
+
+            // This causes an exception.
+            sendToTalk(Protocol.SUBMIT);
+
+            boolean validName = false;
+
+            boolean keepRunning = true;
+
+            while(keepRunning) {
+                String input = in.readLine();
+                server.log(input + " received from " + name);
+                if(input == null)
+                    keepRunning = false;
+
+            }
 
 
+        } catch (IOException e) {
+            server.log("IO error occurred in Mediator");
+            server.log(e.getMessage());
+        } finally {
+            quit();
+        }
     }
 
+    private void quit() {
+        server.log("Session ended for " + name);
+        try {
+            socket.close();
+        } catch (IOException e) {
+            server.log("Error closing socket");
+        }
+    }
+
+    public void sendToTalk(String s) {
+        out.println(s);
+        server.log(s + " was sent to " + name);
+    }
 
 }
