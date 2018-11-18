@@ -8,7 +8,6 @@ package org.palczewski.communication.talk;
 import org.palczewski.communication.Protocol;
 import org.palczewski.communication.listen.Listen;
 
-import javax.swing.text.DefaultCaret;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,14 +43,12 @@ public class Talk implements Runnable {
 
         try (Socket socket = new Socket(host, PORT_NUMBER); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
-            System.out.print("Enter your user name: ");
-            String userName = stdIn.readLine();
+            String userName = login();
 
             boolean keepRunning = true;
 
             while(keepRunning) {
+
 
                 String input = in.readLine();
                 if(input == null) {
@@ -65,17 +62,28 @@ public class Talk implements Runnable {
                                 .SUBMIT:
                             out.println(Protocol.NAME + userName);
                         break;
+                        case Protocol.ACCEPTED:
+                            System.out.println("You have been accepted.");
+                            break;
+                        case Protocol.CHAT:
+                            System.out.println(rest);
+                            break;
+                        case Protocol.REJECTED:
+                            System.out.println("That name is not " +
+                                    "available. Please use another.");
+                            name = login();
+                            userName = name;
+                            out.println(Protocol.NAME + userName);
+                            break;
 
                     }
 
                 }
-
+                // Loop for input from user.
 
 
 
             }
-
-
                     } catch(UnknownHostException e){
                 System.out.println("The host is unknown");
             } catch(ConnectException e){
@@ -84,21 +92,23 @@ public class Talk implements Runnable {
                 System.out.println("An IO exception occurred connecting to: " + host);
             }
 
-        }
+    }
 
-    private void send() {
-        BufferedReader br =
-                new BufferedReader(new InputStreamReader(System.in));
+
+    private String login() {
         try {
-            String msg = br.readLine().trim();
-            if(!msg.isEmpty())
-                System.out.println(msg);
+            BufferedReader stdIn =
+                    new BufferedReader(new InputStreamReader(System.in));
 
+            System.out.print("Please enter a name: ");
+            return stdIn.readLine();
 
         } catch (IOException e) {
-            System.out.println("Error reading from console.");
+            server.log("Error with loggin in.");
         }
+        return null;
     }
+
 
 
     public static void main(String[] args) {

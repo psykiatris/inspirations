@@ -7,13 +7,11 @@ package org.palczewski.communication.listen;
 import org.palczewski.communication.protocol.Mediator;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.SimpleTimeZone;
-
 
 /*
 This is the main point for the server. It simply listens for connections
@@ -22,10 +20,53 @@ This is the main point for the server. It simply listens for connections
 public class Listen implements Runnable {
     private static final long serialVersionUID = 1L;
     private static final int PORT_NUMBER = 2222;
+    private ArrayList<Mediator> connections = new ArrayList<>();
 
 
     Listen() {
         startListen();
+
+    }
+
+    public boolean addConnection(Mediator m, String newName) {
+        boolean added = false;
+        boolean found = false;
+
+        synchronized(connections) {
+            // loop thru connections
+            for(int i = 0; i< connections.size() && !found; i++) {
+                Mediator connection = connections.get(i);
+                String name = connection.getName();
+                if (newName.equals(name)) {
+
+                    found = true;
+
+                }
+            }
+            if(!found) {
+                connections.add(m);
+                added = true;
+            }
+
+        }
+        return added;
+    }
+
+    public void removeConnection(String removeName) {
+        // This removes the name from the list
+        boolean found = false;
+
+        synchronized(connections) {
+            //Loop
+            for(int i = 0; i< connections.size() && !found; i++) {
+                Mediator connection = connections.get(i);
+                String name = connection.getName();
+                if(removeName.equals(name)) {
+                    found = true;
+                    connections.remove(i);
+                }
+            }
+        }
 
     }
 
@@ -60,14 +101,19 @@ public class Listen implements Runnable {
         System.out.printf("[ %s ]: %s%n", timeStamp, msg);
     }
 
+    public void broadcast(String s) {
+
+        synchronized(connections) {
+            for(int i = 0; i<connections.size(); i++) {
+                Mediator connection = connections.get(i);
+                connection.sendToTalk(s);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         new Listen();
 
-
-
     }
-
-
-
 }
 

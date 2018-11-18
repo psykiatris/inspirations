@@ -51,8 +51,35 @@ public class Mediator implements Runnable {
             while(keepRunning) {
                 String input = in.readLine();
                 server.log(input + " received from " + name);
-                if(input == null)
+                if(input == null) {
                     keepRunning = false;
+                } else if(input.length() > 0) {
+                    String action = input.substring(0, 1);
+                    String msg = input.substring(1);
+                    switch(action) {
+                        case Protocol.NAME:
+                            String submittedName = msg;
+                            boolean added = server.addConnection(this,
+                                    submittedName);
+                            if(added) {
+                                validName = true;
+                                name = submittedName;
+                                sendToTalk(Protocol.ACCEPTED);
+                                String message = Protocol.CHAT + name +
+                                        " has joined the conversation.";
+                                server.broadcast(message);
+                                break;
+                                // Otherwise, name is already used.
+                            } else {
+                                sendToTalk(Protocol.REJECTED);
+                            }
+                            break;
+                        case Protocol.QUIT:
+                            keepRunning = false;
+                            break;
+
+                    }
+                }
 
             }
 
@@ -67,6 +94,9 @@ public class Mediator implements Runnable {
 
     private void quit() {
         server.log("Session ended for " + name);
+        if(!name.equals(DEFAULT_NAME)) {
+            server.removeConnection(name);
+        }
         try {
             socket.close();
         } catch (IOException e) {
@@ -77,6 +107,10 @@ public class Mediator implements Runnable {
     public void sendToTalk(String s) {
         out.println(s);
         server.log(s + " was sent to " + name);
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

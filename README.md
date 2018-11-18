@@ -24,3 +24,16 @@ Maybe the title is a little hypocritical, but this is going to start off
      
    If you use a text editor, you are a hard-core programmer and this 
    project deserves a mentor. :)
+   
+   Server/Chat
+   ==
+   
+   The way this is built is there will be two separa jars, labeled 
+   server and chat. Both use the terminal, so no GUI at this time. They 
+   will be packaged in executable jars, with the dependencies (if any) 
+   included. Simply call the .jar like so:
+   java -jar <jarname>. Then open a second terminal and run the client 
+   jar using the the same commeand. 
+   
+   At a later point I will build arguments to dynnamically sert ports 
+   nad hots.
