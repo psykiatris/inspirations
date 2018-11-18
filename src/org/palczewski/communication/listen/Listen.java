@@ -20,7 +20,7 @@ This is the main point for the server. It simply listens for connections
 public class Listen implements Runnable {
     private static final long serialVersionUID = 1L;
     private static final int PORT_NUMBER = 2222;
-    private ArrayList<Mediator> connections = new ArrayList<>();
+    private final ArrayList<Mediator> connections = new ArrayList<>();
 
 
     Listen() {
@@ -38,7 +38,6 @@ public class Listen implements Runnable {
                 Mediator connection = connections.get(i);
                 String name = connection.getName();
                 if (newName.equals(name)) {
-
                     found = true;
 
                 }
@@ -58,7 +57,7 @@ public class Listen implements Runnable {
 
         synchronized(connections) {
             //Loop
-            for(int i = 0; i< connections.size() && !found; i++) {
+            for(int i = 0; (i < connections.size()) && !found; i++) {
                 Mediator connection = connections.get(i);
                 String name = connection.getName();
                 if(removeName.equals(name)) {
@@ -80,13 +79,14 @@ public class Listen implements Runnable {
         log("Server is running.");
 
         try(ServerSocket server = new ServerSocket(PORT_NUMBER)) {
+            boolean keepServer = true;
 
-            while(true) {
+            do {
                 Socket socket = server.accept();
                 log("New connection started");
                 new Mediator(this, socket);
 
-            }
+            } while (keepServer);
 
         } catch (IOException e) {
             log("An exception was caught while listening to port " + PORT_NUMBER);
@@ -98,14 +98,13 @@ public class Listen implements Runnable {
         Date time = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String timeStamp = sdf.format(time);
-        System.out.printf("[ %s ]: %s%n", timeStamp, msg);
+        System.out.printf("[%s]: %s%n", timeStamp, msg);
     }
 
     public void broadcast(String s) {
 
         synchronized(connections) {
-            for(int i = 0; i<connections.size(); i++) {
-                Mediator connection = connections.get(i);
+            for (Mediator connection : connections) {
                 connection.sendToTalk(s);
             }
         }
@@ -116,4 +115,3 @@ public class Listen implements Runnable {
 
     }
 }
-

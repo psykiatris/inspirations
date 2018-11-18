@@ -53,7 +53,7 @@ public class Talk implements Runnable {
                 String input = in.readLine();
                 if(input == null) {
                     keepRunning = false;
-                } else if(input.length() > 0) {
+                } else if(!input.isEmpty()) {
                     String pCode = input.substring(0, 1);
                     String rest = input.substring(1);
 
@@ -75,6 +75,8 @@ public class Talk implements Runnable {
                             userName = name;
                             out.println(Protocol.NAME + userName);
                             break;
+                            default:
+                                break;
 
                     }
 
@@ -94,22 +96,17 @@ public class Talk implements Runnable {
 
     }
 
-
     private String login() {
-        try {
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
 
-            System.out.print("Please enter a name: ");
-            return stdIn.readLine();
+            try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
 
-        } catch (IOException e) {
+                System.out.print("Please enter a name: ");
+                return stdIn.readLine();
+            } catch (IOException e) {
             server.log("Error with loggin in.");
         }
         return null;
     }
-
-
 
     public static void main(String[] args) {
         new Talk();

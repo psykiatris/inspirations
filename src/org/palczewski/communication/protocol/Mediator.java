@@ -45,7 +45,6 @@ public class Mediator implements Runnable {
             sendToTalk(Protocol.SUBMIT);
 
             boolean validName = false;
-
             boolean keepRunning = true;
 
             while(keepRunning) {
@@ -82,8 +81,6 @@ public class Mediator implements Runnable {
                 }
 
             }
-
-
         } catch (IOException e) {
             server.log("IO error occurred in Mediator");
             server.log(e.getMessage());
