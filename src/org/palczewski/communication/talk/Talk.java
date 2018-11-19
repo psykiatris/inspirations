@@ -5,7 +5,7 @@
 package org.palczewski.communication.talk;
 
 
-import org.palczewski.communication.Protocol;
+import org.palczewski.communication.protocol.Protocol;
 import org.palczewski.communication.listen.Listen;
 
 import java.io.BufferedReader;
@@ -37,19 +37,17 @@ public class Talk implements Runnable {
     }
 
     public void run() {
-        System.out.println("Connecting to server at " + host + "\nvia " +
-                "port " + PORT_NUMBER);
-        System.out.println();
 
         try (Socket socket = new Socket(host, PORT_NUMBER); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
 
             String userName = login();
+            name = userName;
+
 
             boolean keepRunning = true;
 
+            // Loop to process input from server
             while(keepRunning) {
-
-
                 String input = in.readLine();
                 if(input == null) {
                     keepRunning = false;
@@ -60,10 +58,10 @@ public class Talk implements Runnable {
                     switch(pCode) {
                         case Protocol
                                 .SUBMIT:
-                            out.println(Protocol.NAME + userName);
+                            out.println(Protocol.NAME + name);
                         break;
                         case Protocol.ACCEPTED:
-                            System.out.println("You have been accepted.");
+                            System.out.println("You have logged in.");
                             break;
                         case Protocol.CHAT:
                             System.out.println(rest);
@@ -71,19 +69,17 @@ public class Talk implements Runnable {
                         case Protocol.REJECTED:
                             System.out.println("That name is not " +
                                     "available. Please use another.");
-                            name = login();
-                            userName = name;
+                            userName = login();
                             out.println(Protocol.NAME + userName);
                             break;
+
                             default:
                                 break;
 
                     }
 
+
                 }
-                // Loop for input from user.
-
-
 
             }
                     } catch(UnknownHostException e){
@@ -94,6 +90,19 @@ public class Talk implements Runnable {
                 System.out.println("An IO exception occurred connecting to: " + host);
             }
 
+
+    }
+
+    private String send() {
+        try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+
+            System.out.print("["+ name + "]: ");
+            return stdIn.readLine();
+        } catch (IOException e) {
+            server.log("Error with sending message.");
+        }
+        return null;
+
     }
 
     private String login() {
@@ -103,7 +112,7 @@ public class Talk implements Runnable {
                 System.out.print("Please enter a name: ");
                 return stdIn.readLine();
             } catch (IOException e) {
-            server.log("Error with loggin in.");
+            server.log("Error with logging in.");
         }
         return null;
     }

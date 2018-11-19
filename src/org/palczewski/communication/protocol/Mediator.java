@@ -4,7 +4,6 @@
 
 package org.palczewski.communication.protocol;
 
-import org.palczewski.communication.Protocol;
 import org.palczewski.communication.listen.Listen;
 
 
