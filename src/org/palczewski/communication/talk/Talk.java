@@ -52,7 +52,7 @@ public class Talk implements Runnable {
                 if(input == null) {
                     System.out.println("The server has closed.");
                     keepRunning = false;
-                } else if(!input.isEmpty()) {
+                } else if(input.length() > 0) {
                     String pCode = input.substring(0, 1);
                     String rest = input.substring(1);
 
@@ -82,7 +82,6 @@ public class Talk implements Runnable {
 
                 }
 
-
             }
                     } catch(UnknownHostException e){
                 System.out.println("The host is unknown");
@@ -95,17 +94,19 @@ public class Talk implements Runnable {
 
     }
 
-    private String send() {
+    private void send() {
         try {
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
+            Socket socket = new Socket(host, PORT_NUMBER);
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
 
             System.out.print("["+ name + "]: ");
-            return stdIn.readLine();
+            String msg = stdIn.readLine();
+            out.println(Protocol.BROADCAST + msg);
         } catch (IOException e) {
             server.log("Error with sending message.");
         }
-        return null;
 
     }
 

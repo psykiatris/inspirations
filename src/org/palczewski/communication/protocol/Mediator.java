@@ -2,10 +2,9 @@
  * Copyright (c) 2018.  Author: Patrick Palczewski <psykiatris@gmail.com>. Licensed under GPL 3. See LICENSE for details.
  */
 
-package org.palczewski.communication.protocol;
+package protocol;
 
-import org.palczewski.communication.listen.Listen;
-
+import org.palczewski.communication.protocol.Protocol;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,13 +20,13 @@ import java.net.Socket;
 public class Mediator implements Runnable {
 
     private static final String DEFAULT_NAME = "(New Client)";
-    private Listen server;
+    private org.palczewski.communication.listen.Listen server;
     private PrintWriter out;
     private BufferedReader in;
     private Socket socket;
     private String name = DEFAULT_NAME;
 
-    public Mediator(Listen listen, Socket skt) {
+    public Mediator(org.palczewski.communication.listen.Listen listen, Socket skt) {
         server = listen;
         socket = skt;
         new Thread(this).start();
@@ -92,6 +91,12 @@ public class Mediator implements Runnable {
         server.log("Session ended for " + name);
         if(!name.equals(DEFAULT_NAME)) {
             server.removeConnection(name);
+            if(out != null) {
+                String s = Protocol.CHAT + name + " has left the " +
+                        "conversation.";
+                server.broadcast(s);
+                out = null;
+            }
         }
         try {
             socket.close();

@@ -4,7 +4,7 @@
 
 package org.palczewski.communication.listen;
 
-import org.palczewski.communication.protocol.Mediator;
+import protocol.Mediator;
 
 import java.io.IOException;
 import java.net.ServerSocket;
