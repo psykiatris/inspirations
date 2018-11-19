@@ -50,6 +50,7 @@ public class Talk implements Runnable {
             while(keepRunning) {
                 String input = in.readLine();
                 if(input == null) {
+                    System.out.println("The server has closed.");
                     keepRunning = false;
                 } else if(!input.isEmpty()) {
                     String pCode = input.substring(0, 1);
@@ -81,6 +82,7 @@ public class Talk implements Runnable {
 
                 }
 
+
             }
                     } catch(UnknownHostException e){
                 System.out.println("The host is unknown");
@@ -94,7 +96,9 @@ public class Talk implements Runnable {
     }
 
     private String send() {
-        try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
+            BufferedReader stdIn =
+                    new BufferedReader(new InputStreamReader(System.in));
 
             System.out.print("["+ name + "]: ");
             return stdIn.readLine();
@@ -107,7 +111,9 @@ public class Talk implements Runnable {
 
     private String login() {
 
-            try (BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))) {
+            try {
+                BufferedReader stdIn =
+                        new BufferedReader(new InputStreamReader(System.in));
 
                 System.out.print("Please enter a name: ");
                 return stdIn.readLine();
