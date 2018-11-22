@@ -4,91 +4,85 @@
 
 package org.palczewski.communication.talk;
 
+import org.palczewski.communication.listen.ListenServer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-public class TalkClient implements Runnable {
+/*
+* The example this class is taken from is based on swing (GUI). Writing
+* this to be used with a terminal
+* */
+public class TalkClient {
 
-    private static final long serialVersionUID = 1L;
-    private static final int PORT_NUMBER = 2222;
-    private String name = "Name";
-    private String host = "localhost";
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    BufferedReader in;
+    PrintWriter out;
 
-    TalkClient() {
-
-        new Thread(this, "Client").start();
+    public TalkClient() {
 
     }
 
-
-    public static void main(String[] args) {
-        new TalkClient();
-
-
-    }
-
-    public void run() {
-        // Connect to server
-        try {
-            socket = new Socket(host, PORT_NUMBER);
-            // Set up in/ou to server
-            in =
-                    new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
-
-            // Process input
-            String input = in.readLine();
-
-            System.out.println("Your name is: " + name);
-
-        } catch (UnknownHostException e) {
-            System.out.println("Host is unknown.");
-        } catch (ConnectException e) {
-            System.out.println("The server is not running.");
-        } catch (IOException e) {
-            System.out.println("IO error in Client.run()");
-        }
-
-    }
-
-    private void send() {
-        /*
-        * Create a buffer to recive input from System.in. May not need,
-        * as there will be a Comm class to handle this.
-        * */
+    private String getServerAddress() {
+        // Set up Input from console
         BufferedReader stdIn =
                 new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter server address: ");
         try {
-            String message = stdIn.readLine();
-            if(message.length() > 0) {
-                System.out.println(message);
+            return stdIn.readLine();
+        } catch (IOException e) {
+            ListenServer.log("Error in getting server address");
+        }
+        return null;
+    }
+
+    private String getName() {
+        BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter your name: ");
+        try {
+            return stdIn.readLine();
+        } catch (IOException e) {
+            ListenServer.log("Error getting username.");
+        }
+        return null;
+
+    }
+
+    // Connect to server
+    private void run() throws IOException {
+        String serverAddress = getServerAddress();
+        Socket socket = new Socket(serverAddress, 2222);
+        in =
+                new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+        String user = getName();
+
+        // Now process input
+        while(true) {
+            String line = in.readLine();
+            if(line.startsWith("SUBMITNAME")) {
+                out.println(user);
+
+            } else if(line.startsWith("NAMEACCEPTED")) {
+                BufferedReader stdIn =
+                        new BufferedReader(new InputStreamReader(System.in));
+                System.out.print("[" + user + "]: ");
+            } else if(line.startsWith("MESSAGES")) {
+                System.out.println(line.substring(8));
             }
 
-        } catch (IOException e) {
-            System.out.println("IO Error in Client.send()");
         }
-
-
     }
 
-    private void login() {
-        // Set up a buffer
-        BufferedReader stdIn =
-                new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Please enter your name: ");
+    public static void main(String[] args) {
+        TalkClient client = new TalkClient();
         try {
-            name = stdIn.readLine();
+            client.run();
         } catch (IOException e) {
-            System.out.println("IOError in Client.login()");
+            System.out.println("Error running Client");
         }
-
     }
 }
