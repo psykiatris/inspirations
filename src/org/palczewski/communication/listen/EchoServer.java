@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /*
 * This is copied from Oracle's Tutorial, in an effort to understand how
@@ -26,29 +28,30 @@ public class EchoServer {
         }
 
         int portNumber = Integer.parseInt(args[0]);
+        boolean listening = true;
 
-        // Try-with-resources so it will
-        // autoclose
-        try (
-                ServerSocket serverSocket =
-                        new ServerSocket(Integer.parseInt(args[0]));
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter out =
-                        new PrintWriter(clientSocket.getOutputStream(),
-                                true);
-                BufferedReader in =
-                        new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                ) {
-            String inputLine;
-            while((inputLine = in.readLine()) != null) {
-                out.println(inputLine);
+        /* Multiple connections, get passed off to threads.*/
+        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+            log("Starting server");
+
+            while(listening) {
+
+                new Thread(new EchoThread(serverSocket.accept())).start();
             }
         } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen " +
-                    "to port " + portNumber+ " or listening for a " +
-                    "connection");
+            System.out.println("Could not listen to port " +
+                    "to port " + portNumber);
             System.out.println(e.getMessage());
+            System.exit(-1);
         }
     }
+
+    public static void log(String s) {
+        Date time = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String timeStamp = sdf.format(time);
+        System.out.printf("[%s]: %s%n", timeStamp, s);
+    }
+
 
 }

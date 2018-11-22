@@ -32,15 +32,26 @@ public class EchoClient {
                         new PrintWriter(echoSocket.getOutputStream(),
                                 true);
                 BufferedReader in =
-                        new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-                BufferedReader stdIn =
-                        new BufferedReader(new InputStreamReader(System.in))
-
+                        new BufferedReader(new InputStreamReader(echoSocket.getInputStream()))
                 ) {
-            String userInput;
-            while((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
-                System.out.println("echo: " + in.readLine());
+            // Console inoyt buffer
+            BufferedReader stdIn =
+                    new BufferedReader(new InputStreamReader(System.in));
+
+            String fromUser;
+            String fromServer;
+
+            while((fromServer = in.readLine()) != null) {
+                System.out.println(fromServer);
+                if(fromServer.equalsIgnoreCase("Bye"))
+                    break;
+
+                fromUser = stdIn.readLine();
+                if(fromUser != null) {
+                    System.out.println("Client: " + fromUser);
+                    out.println(fromUser);
+                }
+
             }
 
         } catch (UnknownHostException e) {
