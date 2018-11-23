@@ -27,6 +27,9 @@ public class EchoThread extends Thread {
     public void run() {
         EchoServer.log("Established new connection");
 
+        // Prints number of threads currently active.
+        System.out.println("Active: " + getThreadGroup().activeCount());
+
         // Open the streams
         try(PrintWriter out = new PrintWriter(socket.getOutputStream(),
                 true);

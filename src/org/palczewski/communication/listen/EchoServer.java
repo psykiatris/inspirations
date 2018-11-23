@@ -19,7 +19,10 @@ import java.util.Date;
  * a time.
 * */
 public class EchoServer {
+
     public static void main(String[] args) throws IOException {
+        // Set up ThreadGroup
+        ThreadGroup tg = new ThreadGroup("Chat");
 
         // Pass arguments from command-line
         if(args.length != 1) {
@@ -36,7 +39,9 @@ public class EchoServer {
 
             while(listening) {
 
-                new Thread(new EchoThread(serverSocket.accept())).start();
+                // Passes client connection to new thread
+                new Thread(tg,
+                        new EchoThread(serverSocket.accept()), "Client").start();
             }
         } catch (IOException e) {
             System.out.println("Could not listen to port " +

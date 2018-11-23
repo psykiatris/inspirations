@@ -3,7 +3,10 @@
  */
 
 package org.palczewski.communication.protocol;
-
+/*
+* This class manages the transactions between server and client, passing
+ * messages back and forth.
+ * */
 public class Protocol {
     private static final int WAITING = 0;
     private static final int SENTKNOCKKNOCK = 1;
@@ -32,7 +35,9 @@ public class Protocol {
             if(theInput.equalsIgnoreCase("Who's there?")) {
                 theOutput = clues[currentJoke];
                 state = SENTCLUE;
-            } else {
+            } else if(theInput.equalsIgnoreCase(currentJoke + "who?")) {
+                theOutput = answers[currentJoke];
+            }else {
                 theOutput = "You're supposed to say \"Who's there?\"! " +
                         "Try again. Knock Knock";
                 state = SENTKNOCKKNOCK;
