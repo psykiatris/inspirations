@@ -15,20 +15,23 @@ import java.net.Socket;
 /*
 * This class sets up the threads for each connection to the server
 * */
-public class EchoThread extends Thread {
-    private Socket socket = null;
-    EchoServer server;
+public class ClientThread extends Thread {
 
-    public EchoThread(Socket socket) {
-        super("EchoThread");
+    private Socket socket = null;
+    TheServer server;
+
+    public ClientThread(Socket socket) {
+        super("ClientThread");
         this.socket = socket;
     }
 
     public void run() {
-        EchoServer.log("Established new connection");
+        TheServer.log("Established new connection");
 
         // Prints number of threads currently active.
         System.out.println("Active: " + getThreadGroup().activeCount());
+
+
 
         // Open the streams
         try(PrintWriter out = new PrintWriter(socket.getOutputStream(),
@@ -51,8 +54,8 @@ public class EchoThread extends Thread {
             socket.close();
 
         } catch (IOException e) {
-            EchoServer.log("IO Error in EchoThread.run()");
-            EchoServer.log(e.getMessage());
+            TheServer.log("IO Error in EchoThread.run()");
+            TheServer.log(e.getMessage());
         }
 
     }

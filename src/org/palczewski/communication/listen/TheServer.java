@@ -4,29 +4,27 @@
 
 package org.palczewski.communication.listen;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /*
-* This is copied from Oracle's Tutorial, in an effort to understand how
-* using a terminal would work. Sds it is, only one client can connect at
- * a time.
+* This is the main server class. It receives connections and passes it
+* to a thread.
+*
+* It also logs any server messages, such as when a perosn
+* connects/disconnects, etc.
 * */
-public class EchoServer {
+public class TheServer {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         // Set up ThreadGroup
-        ThreadGroup tg = new ThreadGroup("Chat");
+
 
         // Pass arguments from command-line
         if(args.length != 1) {
-            System.err.println("Usage: EchoServer <port number>");
+            System.err.println("Usage: TheServer <port number>");
             System.exit(2);
         }
 
@@ -40,8 +38,8 @@ public class EchoServer {
             while(listening) {
 
                 // Passes client connection to new thread
-                new Thread(tg,
-                        new EchoThread(serverSocket.accept()), "Client").start();
+                new Thread(new ClientThread(serverSocket.accept()),
+                        "Client").start();
             }
         } catch (IOException e) {
             System.out.println("Could not listen to port " +
@@ -52,6 +50,7 @@ public class EchoServer {
     }
 
     public static void log(String s) {
+        // TODO: 11/23/18 Change to use updated java.time packages.
         Date time = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String timeStamp = sdf.format(time);

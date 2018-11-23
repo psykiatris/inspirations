@@ -15,11 +15,11 @@ import java.net.UnknownHostException;
 * Copied from Oracle's tutorial to better understand using terminal to
 * communicate to server.
 * */
-public class EchoClient {
+public class TheClient {
     public static void main(String[] args) {
 
         if(args.length != 2) {
-            System.err.println("Usage: EchoClient <host> <port number>");
+            System.err.println("Usage: TheClient <host> <port number>");
             System.exit(2);
         }
 
@@ -27,12 +27,12 @@ public class EchoClient {
         int portNumber = Integer.parseInt(args[1]);
 
         try (
-                Socket echoSocket = new Socket(hostName, portNumber);
+                Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out =
-                        new PrintWriter(echoSocket.getOutputStream(),
+                        new PrintWriter(socket.getOutputStream(),
                                 true);
                 BufferedReader in =
-                        new BufferedReader(new InputStreamReader(echoSocket.getInputStream()))
+                        new BufferedReader(new InputStreamReader(socket.getInputStream()))
                 ) {
             // Console inoyt buffer
             BufferedReader stdIn =
