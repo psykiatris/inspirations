@@ -4,10 +4,7 @@
 
 package org.palczewski.communication.talk;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -23,6 +20,9 @@ public class TheClient {
             System.exit(2);
         }
 
+        // Get name info from user
+        String user = login();
+
         String hostName = args[0];
         int portNumber = Integer.parseInt(args[1]);
 
@@ -34,21 +34,25 @@ public class TheClient {
                 BufferedReader in =
                         new BufferedReader(new InputStreamReader(socket.getInputStream()))
                 ) {
-            // Console inoyt buffer
+            // Console input buffer
             BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in));
 
             String fromUser;
             String fromServer;
 
+            // Listening for server traffic
             while((fromServer = in.readLine()) != null) {
                 System.out.println(fromServer);
+                // If server notifies it will quit.
                 if(fromServer.equalsIgnoreCase("Bye"))
                     break;
 
                 fromUser = stdIn.readLine();
+
+                // Watch for user input
                 if(fromUser != null) {
-                    System.out.println("Client: " + fromUser);
+                    System.out.println(user + ": " + fromUser);
                     out.println(fromUser);
                 }
 
@@ -62,6 +66,19 @@ public class TheClient {
             System.exit(1);
         }
 
+    }
+
+    private static String login() {
+        System.out.print("Please enter your name: ");
+        // Open stream
+        BufferedReader stdIn =
+                new BufferedReader(new InputStreamReader(System.in));
+        try {
+            return stdIn.readLine();
+        } catch (IOException e) {
+            System.out.println("IO Error getting name");
+        }
+        return null;
 
     }
 }

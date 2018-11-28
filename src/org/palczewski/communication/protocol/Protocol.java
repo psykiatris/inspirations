@@ -4,8 +4,11 @@
 
 package org.palczewski.communication.protocol;
 /*
-* This class manages the transactions between server and client, passing
- * messages back and forth.
+* This class provides the "translation" the server and client must
+* communicate with each other.
+*
+* It will process messages from one to th euser, via the processin
+* method (which may change)
  * */
 public class Protocol {
     private static final int WAITING = 0;
@@ -17,7 +20,7 @@ public class Protocol {
 
     private int state = WAITING;
     private int currentJoke = 0;
-
+    // The clues and answers of the knock knock jokes
     private String[] clues = { "Turnip", "Little Old Lady", "Atch", "Who", "Who"};
     private String[] answers = {"Turnip the heat, it's cold in here",
     "I didn't know you could yodel!",
@@ -35,7 +38,8 @@ public class Protocol {
             if(theInput.equalsIgnoreCase("Who's there?")) {
                 theOutput = clues[currentJoke];
                 state = SENTCLUE;
-            } else if(theInput.equalsIgnoreCase(currentJoke + "who?")) {
+            } else if(theInput.equalsIgnoreCase(clues[currentJoke] +
+                    "who?")) {
                 theOutput = answers[currentJoke];
             }else {
                 theOutput = "You're supposed to say \"Who's there?\"! " +
