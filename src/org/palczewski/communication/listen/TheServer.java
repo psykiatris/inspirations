@@ -7,6 +7,9 @@ package org.palczewski.communication.listen;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 /*
@@ -50,11 +53,13 @@ public class TheServer {
     }
 
     public static void log(String s) {
-        // TODO: 11/23/18 Change to use updated java.time packages.
-        Date time = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        String timeStamp = sdf.format(time);
+
+        LocalDateTime time = LocalDateTime.now();
+        String timeStamp =
+                time.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
         System.out.printf("[%s]: %s%n", timeStamp, s);
+
+
     }
 
 
