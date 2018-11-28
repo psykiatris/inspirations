@@ -6,11 +6,10 @@ package org.palczewski.communication.listen;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Date;
+
 
 /*
 * This is the main server class. It receives connections and passes it
@@ -22,7 +21,7 @@ import java.util.Date;
 public class TheServer {
 
     public static void main(String[] args) {
-        // Set up ThreadGroup
+
 
 
         // Pass arguments from command-line
@@ -56,7 +55,8 @@ public class TheServer {
 
         LocalDateTime time = LocalDateTime.now();
         String timeStamp =
-                time.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
+                time.format(DateTimeFormatter.ofPattern("MM'/'dd'/'yyyy " +
+                        "HH':'mm':'ss"));
         System.out.printf("[%s]: %s%n", timeStamp, s);
 
 
