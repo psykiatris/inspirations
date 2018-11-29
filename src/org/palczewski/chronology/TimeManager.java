@@ -8,10 +8,7 @@ import javax.swing.plaf.basic.BasicMenuUI;
 import java.time.*;
 import java.time.chrono.*;
 import java.time.format.ResolverStyle;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalField;
-import java.time.temporal.ValueRange;
+import java.time.temporal.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -23,33 +20,17 @@ import java.util.Map;
 * */
 public class TimeManager {
 
-
-    public static void main(String[] args) {
-
-        /*
-        * Simply... The following line creates an instance of the
-        * Chronology desired.
-        *
-        * Then you can call the methods associated with the Chronology
-        * */
-
-
-        IsoChronology chron = IsoChronology.INSTANCE;
-        System.out.println(chron.getCalendarType());
-
-        ChronoLocalDate date = chron.date(2020, 9, 1);
-        System.out.println(date);
-
-        LocalTime time = LocalTime.of(12, 1, 0);
-
-        // 0 is BC, 1 is CE
-        Era era = chron.eraOf(1);
-        System.out.println(era);
-
-        Period period = chron.period(1, 12, 31);
-
+    TimeManager() {
 
 
     }
 
+
+    public static void main(String[] args) {
+        Chronology chrono = IsoChronology.INSTANCE;
+        LocalDate myDate = LocalDate.of(2017, 1, 1);
+        ChronoLocalDateTime<?> cdt =
+                chrono.date(myDate).atTime(LocalTime.NOON);
+        System.out.println(cdt);
+    }
 }
