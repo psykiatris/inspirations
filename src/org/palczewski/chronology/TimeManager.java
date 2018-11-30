@@ -33,20 +33,27 @@ public class TimeManager {
         Clock clock = Clock.systemDefaultZone();
 
         /*
-        * This allows me to use a clock object for timeZone reference.
-        *
-        * Will need to manage ticking the days, as the hours and minutes
+         * This allows me to use a clock object for timeZone reference.
+         *
+         * Will need to manage ticking the days, as the hours and minutes
          * will be curent.
          *
-         * // TODO: 11/30/18 Move to constructor */
+         * */
         LocalDateTime dateTime =
                 LocalDateTime.now(clock).withYear(2020).withMonth(9).withDayOfMonth(1);
 
         LocalDateTime curTime = LocalDateTime.now();
+
         System.out.println("Game time: " + dateTime);
         System.out.println("Time now: " + curTime);
 
-
-
+        /*
+        * In order to tick time, have a thread loop where the Clock
+        * increments 1 minut for every 15 seconds. It will update the
+        * time varialble with the ticked time, which the user can
+        * request when they want.
+        * // TODO: 11/30/18 Set up thread to tick time.
+         * */
+        System.out.println("Adjusted: " + dateTime.plusHours(24));
     }
 }
