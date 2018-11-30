@@ -20,17 +20,33 @@ import java.util.Map;
 * */
 public class TimeManager {
 
+
     TimeManager() {
+
 
 
     }
 
 
     public static void main(String[] args) {
-        Chronology chrono = IsoChronology.INSTANCE;
-        LocalDate myDate = LocalDate.of(2017, 1, 1);
-        ChronoLocalDateTime<?> cdt =
-                chrono.date(myDate).atTime(LocalTime.NOON);
-        System.out.println(cdt);
+
+        Clock clock = Clock.systemDefaultZone();
+
+        /*
+        * This allows me to use a clock object for timeZone reference.
+        *
+        * Will need to manage ticking the days, as the hours and minutes
+         * will be curent.
+         *
+         * // TODO: 11/30/18 Move to constructor */
+        LocalDateTime dateTime =
+                LocalDateTime.now(clock).withYear(2020).withMonth(9).withDayOfMonth(1);
+
+        LocalDateTime curTime = LocalDateTime.now();
+        System.out.println("Game time: " + dateTime);
+        System.out.println("Time now: " + curTime);
+
+
+
     }
 }
