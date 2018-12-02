@@ -7,12 +7,16 @@ package org.palczewski.communication.talk;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 
 /*
 * Copied from Oracle's tutorial to better understand using terminal to
 * communicate to server.
 * */
 public class TheClient {
+    static BufferedReader stdIn;
+
     public static void main(String[] args) {
 
         if(args.length != 2) {
@@ -30,13 +34,13 @@ public class TheClient {
                 Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out =
                         new PrintWriter(socket.getOutputStream(),
-                                true);
+                                true, StandardCharsets.UTF_8);
                 BufferedReader in =
-                        new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                        new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))
                 ) {
             // Console input buffer
-            BufferedReader stdIn =
-                    new BufferedReader(new InputStreamReader(System.in));
+            stdIn =
+                    new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
             String fromUser;
             String fromServer;
@@ -52,17 +56,17 @@ public class TheClient {
 
                 // Watch for user input
                 if(fromUser != null) {
-                    System.out.println(user + ": " + fromUser);
+                    System.out.println(MessageFormat.format("{0}: {1}", user, fromUser));
                     out.println(fromUser);
                 }
 
             }
 
         } catch (UnknownHostException e) {
-            System.out.println("Could not reach host at " + hostName);
+            System.out.println(MessageFormat.format("Could not reach host at {0}", hostName));
             System.exit(1);
         } catch (IOException e) {
-            System.out.println("Couldn't get IO for connection to " + hostName);
+            System.out.println(MessageFormat.format("Couldn''t get IO for connection to {0}", hostName));
             System.exit(1);
         }
 
@@ -70,9 +74,9 @@ public class TheClient {
 
     private static String login() {
         System.out.print("Please enter your name: ");
-        // Open stream
-        BufferedReader stdIn =
-                new BufferedReader(new InputStreamReader(System.in));
+
+        stdIn =
+                new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         try {
             return stdIn.readLine();
         } catch (IOException e) {

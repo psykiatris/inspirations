@@ -4,14 +4,10 @@
 
 package org.palczewski.chronology;
 
-import javax.swing.plaf.basic.BasicMenuUI;
+
 import java.time.*;
-import java.time.chrono.*;
-import java.time.format.ResolverStyle;
-import java.time.temporal.*;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 
 /*
 * The goal of this class is to utilize the new Date-Time API that was
@@ -22,6 +18,7 @@ public class TimeManager {
 
 
     TimeManager() {
+        //Start thread from here.
 
 
 
@@ -55,5 +52,38 @@ public class TimeManager {
         * // TODO: 11/30/18 Set up thread to tick time.
          * */
         System.out.println("Adjusted: " + dateTime.plusHours(24));
+        System.out.println();
+
+        // Using temporal adjsters.
+        LocalDate now = LocalDate.now();
+        LocalDate adjusted = now.with(TemporalAdjusters.lastDayOfMonth());
+        System.out.println("Now with last day of month " + adjusted);
+        System.out.println("Now: " + now);
+        System.out.println();
+        displayTime();
+
+    }
+
+    public static void displayTime() {
+        /*
+        * The clock loop will update the global time/date variable. This
+         * function will display it to th euser whenever desired.
+         * */
+
+        // Period define distances in dates
+        Period period = Period.between(LocalDate.now(),
+                LocalDate.of(2019, Month.APRIL, 16));
+        System.out.println(period);
+
+        // Duration defines distance on times
+        Duration duration = Duration.ofSeconds(30);
+        Duration restofDay = Duration.between(LocalTime.now(),
+                LocalTime.MIDNIGHT);
+        duration.get(ChronoUnit.SECONDS);
+
+        System.out.println(LocalTime.now());
+        System.out.println(LocalTime.now().plus(duration));
+
+
     }
 }
