@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 * communicate to server.
 * */
 public class TheClient {
-    static BufferedReader stdIn;
+
 
     public static void main(String[] args) {
 
@@ -24,8 +24,8 @@ public class TheClient {
             System.exit(2);
         }
 
-        // Get name info from user
-        String user = login();
+        // Use name for prompt
+        String user = "Patrick";
 
         String hostName = args[0];
         int portNumber = Integer.parseInt(args[1]);
@@ -39,7 +39,7 @@ public class TheClient {
                         new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))
                 ) {
             // Console input buffer
-            stdIn =
+            BufferedReader stdIn =
                     new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
             String fromUser;
@@ -71,18 +71,6 @@ public class TheClient {
         }
 
     }
+who
 
-    private static String login() {
-        System.out.print("Please enter your name: ");
-
-        stdIn =
-                new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-        try {
-            return stdIn.readLine();
-        } catch (IOException e) {
-            System.out.println("IO Error getting name");
-        }
-        return null;
-
-    }
 }
