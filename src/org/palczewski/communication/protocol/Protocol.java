@@ -3,6 +3,9 @@
  */
 
 package org.palczewski.communication.protocol;
+
+import org.palczewski.communication.listen.TheServer;
+
 /*
 * This class provides the "translation" the server and client must
 * communicate with each other.
@@ -12,53 +15,28 @@ package org.palczewski.communication.protocol;
  * */
 public class Protocol {
     private static final int WAITING = 0;
-    private static final int SENTKNOCKKNOCK = 1;
+    private static final int SENTREQ = 1;
     private static final int SENTCLUE = 2;
     private static final int ANOTHER = 3;
 
     private static final int NUMJOKES = 5;
 
     private int state = WAITING;
-    private int currentJoke = 0;
-    // The clues and answers of the knock knock jokes
-    private String[] clues = { "Turnip", "Little Old Lady", "Atch", "Who", "Who"};
-    private String[] answers = {"Turnip the heat, it's cold in here",
-    "I didn't know you could yodel!",
-    "Bless you",
-    "Is there an owl in here?",
-    "Is there an echo in here?"};
+
 
     public String processInput(String theInput) {
         String theOutput = null;
 
-        if(state == WAITING) {
-            theOutput = "Knock knock";
-            state = SENTKNOCKKNOCK;
-        } else if(state == SENTKNOCKKNOCK) {
-            if(theInput.equalsIgnoreCase("Who's there?")) {
-                theOutput = clues[currentJoke];
-                state = SENTCLUE;
-            } else if(theInput.equalsIgnoreCase(clues[currentJoke] +
-                    "who?")) {
-                theOutput = answers[currentJoke];
-            }else {
-                theOutput = "You're supposed to say \"Who's there?\"! " +
-                        "Try again. Knock Knock";
-                state = SENTKNOCKKNOCK;
-            }
-        } else if(state == ANOTHER) {
-            if(theInput.equalsIgnoreCase("y")) {
-                theOutput = "Knock! Knock!";
-                if(currentJoke == (NUMJOKES - 1))
-                    currentJoke = 0;
-                else
-                    currentJoke++;
-                state = SENTKNOCKKNOCK;
+        switch(state) {
+            case WAITING:
+                theOutput = "Welcome to the Pat Chat. Enter your name.";
 
-            } else {
-                theOutput = "Bye";
-                state = WAITING;
-            }
+                state = SENTREQ;
+                break;
+            case SENTREQ:
+                String temp = theInput;
+                TheServer.log(temp + " was submitted.");
+                break;
         }
         return theOutput;
     }

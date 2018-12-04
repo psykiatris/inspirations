@@ -6,27 +6,32 @@ package org.palczewski.communication.listen;
 
 import org.palczewski.communication.protocol.Protocol;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 /*
 * This class sets up the threads for each connection to the server
 * */
 public class ClientThread extends Thread {
+    private static final String DEFAULT_NAME = "(New Client)";
+    private String name = DEFAULT_NAME;
 
     private Socket socket = null;
-    TheServer server;
 
-    public ClientThread(Socket socket) {
+
+    ClientThread(Socket socket) {
         super("ClientThread");
         this.socket = socket;
+
     }
 
     public void run() {
-        TheServer.log("Established new connection");
+        TheServer.log("Established new connection from " + name);
 
         /*
         * Develop a log-in type system to get name from client. Will
@@ -37,11 +42,12 @@ public class ClientThread extends Thread {
 
         // Open the streams
         try(PrintWriter out = new PrintWriter(socket.getOutputStream(),
-                true);
+                true, StandardCharsets.UTF_8);
             BufferedReader in =
-                    new BufferedReader(new InputStreamReader(socket.getInputStream()))
+                    new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))
         ) {
-            String inputLine, outputLine;
+            String inputLine;
+            String outputLine;
             // Create Protocol object
             Protocol protocol = new Protocol();
             outputLine = protocol.processInput(null);
@@ -57,6 +63,7 @@ public class ClientThread extends Thread {
             }
             // Disconnect from server
             socket.close();
+            TheServer.log(name + " has disconnected");
 
         } catch (IOException e) {
             TheServer.log("IO Error in ClientThread.run()");

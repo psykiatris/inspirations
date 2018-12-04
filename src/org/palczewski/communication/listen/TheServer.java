@@ -6,9 +6,10 @@ package org.palczewski.communication.listen;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+
 
 
 /*
@@ -19,6 +20,8 @@ import java.time.format.FormatStyle;
 * connects/disconnects, etc.
 * */
 public class TheServer {
+
+
 
     public static void main(String[] args) {
 
@@ -35,7 +38,7 @@ public class TheServer {
 
         /* Multiple connections, get passed off to threads.*/
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
-            log("Starting server");
+            log("Starting the server");
 
             while(listening) {
 
@@ -44,8 +47,7 @@ public class TheServer {
                         "Client").start();
             }
         } catch (IOException e) {
-            System.out.println("Could not listen to port " +
-                    "to port " + portNumber);
+            System.out.println(MessageFormat.format("Could not listen to port to port {0}", portNumber));
             System.out.println(e.getMessage());
             System.exit(-1);
         }
@@ -55,8 +57,7 @@ public class TheServer {
 
         LocalDateTime time = LocalDateTime.now();
         String timeStamp =
-                time.format(DateTimeFormatter.ofPattern("MM'/'dd'/'yyyy " +
-                        "HH':'mm':'ss"));
+                time.format(DateTimeFormatter.ofPattern("MM'/'dd'/'yyyy HH':'mm':'ss"));
         System.out.printf("[%s]: %s%n", timeStamp, s);
 
 
