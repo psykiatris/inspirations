@@ -10,7 +10,7 @@ import org.palczewski.communication.listen.TheServer;
 * This class provides the "translation" the server and client must
 * communicate with each other.
 *
-* It will process messages from one to th euser, via the processin
+* It will process messages from one to th euser, via the processIn
 * method (which may change)
  * */
 public class Protocol {
@@ -29,14 +29,16 @@ public class Protocol {
 
         switch(state) {
             case WAITING:
-                theOutput = "Welcome to the Pat Chat. Enter your name.";
-
+                theOutput = "Welcome to the Pat Chat.\nEnter your name.";
                 state = SENTREQ;
                 break;
             case SENTREQ:
                 String temp = theInput;
                 TheServer.log(temp + " was submitted.");
+                // pass temp to login
+                state = WAITING;
                 break;
+
         }
         return theOutput;
     }
