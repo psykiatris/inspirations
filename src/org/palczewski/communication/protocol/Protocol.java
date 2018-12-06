@@ -29,13 +29,18 @@ public class Protocol {
 
         switch(state) {
             case WAITING:
-                theOutput = "Welcome to the Pat Chat.\nEnter your name.";
+                theOutput = "Welcome to the Pat Chat.";
+                theOutput += "\nEnter your name.";
                 state = SENTREQ;
                 break;
             case SENTREQ:
                 String temp = theInput;
                 TheServer.log(temp + " was submitted.");
                 // pass temp to login
+                state = WAITING;
+                break;
+            default:
+                theOutput = "Sorry, what was that?";
                 state = WAITING;
                 break;
 
