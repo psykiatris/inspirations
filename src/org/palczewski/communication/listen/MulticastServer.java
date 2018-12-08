@@ -15,9 +15,9 @@ import java.nio.channels.DatagramChannel;
 * Uses datagram to multicast
 * */
 public class MulticastServer {
-    public static final String MULTICAST_IP = "localhost";
+    public static final String MULTICAST_IP = "192.168.0.1";
     public static final int MULTICAST_PORT = 2222;
-    public static final String MULTICAST_INTERFACE_NAME = "eth1";
+    public static final String MULTICAST_INTERFACE_NAME = "wlp2s0";
 
     public static void main(String[] args) {
 
