@@ -4,6 +4,7 @@
 
 package org.palczewski.communication.listen;
 
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
 /*
@@ -12,13 +13,16 @@ import java.nio.channels.SocketChannel;
 public class ChannelThread extends Thread {
 
     SocketChannel socket;
+    Selector selector;
 
-    ChannelThread(SocketChannel socket) {
-        super("Client");
-        this.socket = socket;
+    ChannelThread(SocketChannel sck, Selector sel) {
+        super("NewClient");
+        socket = sck;
+        selector = sel;
     }
 
     public void run() {
         TheServer.log("Connection made");
+        System.out.println(Thread.currentThread());
     }
 }
