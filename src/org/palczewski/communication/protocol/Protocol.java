@@ -4,7 +4,7 @@
 
 package org.palczewski.communication.protocol;
 
-import org.palczewski.communication.listen.TheServer;
+// import org.palczewski.communication.listen.TheServer;
 
 /*
 * This class provides the "translation" the server and client must
@@ -35,7 +35,7 @@ public class Protocol {
                 break;
             case SENTREQ:
                 String temp = theInput;
-                TheServer.log(temp + " was submitted.");
+
                 // pass temp to login
                 state = WAITING;
                 break;
