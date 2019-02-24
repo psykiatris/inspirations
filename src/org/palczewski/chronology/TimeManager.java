@@ -46,7 +46,7 @@ public class TimeManager {
 
         /*
         * In order to tick time, have a thread loop where the Clock
-        * increments 1 minut for every 15 seconds. It will update the
+        * increments 1 minute for every 15 seconds. It will update the
         * time varialble with the ticked time, which the user can
         * request when they want.
         * // TODO: 11/30/18 Set up thread to tick time.
@@ -73,16 +73,21 @@ public class TimeManager {
         // Period define distances in dates
         Period period = Period.between(LocalDate.now(),
                 LocalDate.of(2019, Month.APRIL, 16));
+        System.out.println("Period between now and April 16th:");
         System.out.println(period);
 
         // Duration defines distance on times
         Duration duration = Duration.ofSeconds(30);
         Duration restofDay = Duration.between(LocalTime.now(),
-                LocalTime.MIDNIGHT);
+                LocalTime.MIDNIGHT);    // Actually goes backwards to
+        // midnight
         duration.get(ChronoUnit.SECONDS);
 
-        System.out.println(LocalTime.now());
-        System.out.println(LocalTime.now().plus(duration));
+        System.out.println("Now: " + LocalTime.now());
+        System.out.println("30 seconds: " + LocalTime.now().plus(duration));
+        System.out.println("To end of today: " + LocalTime.now().plus(restofDay));
+        System.out.println("duration variable: " + duration.get(ChronoUnit.SECONDS));
+        System.out.println("Restofday: " + restofDay.get(ChronoUnit.SECONDS));
 
 
     }
