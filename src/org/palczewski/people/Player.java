@@ -9,25 +9,61 @@ This will be a basic player class.
 public class Player {
 
     // Basic to players
-    String name;
+    public String name;
     double health;
     double stamina;
 
-    Player(String name) {
+    public Player(String name) {
 
+        // Sets name and assigns stats
         this.name = name;
         stamina = 100.0;
         health = 100;
 
     }
 
-    Player() {}
 
     public void getInfo() {
 
         System.out.println("Player Info:");
-        System.out.println("\tName: " _ name);
+        System.out.println("\tName: " + name);
         System.out.println("\tStamina: " + stamina);
-        System.out.println("\tHaalth: " + health);
+        System.out.println("\tHealth: " + health);
     }
+
+    // Getters and setters
+    public void setStamina(double stamina) {
+        this.stamina = stamina;
+    }
+
+    public double getStamina() {
+        return stamina;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void gainHealth(double i) {
+        health += i;
+
+    }
+
+    public void loseHealth(double i) {
+        health -= i;
+    }
+
+    public void gainStamina(double i) {
+        stamina += i;
+    }
+
+    public void loseStamina(double i) {
+        stamina -= i;
+    }
+
+
 }

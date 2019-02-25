@@ -9,12 +9,33 @@ invincible.
  */
 public class GameMaster extends Player {
 
-    GameMaster(String name) {
+    public GameMaster(String name) {
 
-        this.name = name;
+        super(name);
         stamina = 100000.0;
         health = 100000.0;
 
+    }
 
+    /*
+    in the off-chance a player decides to fight the GameMaster...
+     */
+    public void resurrect() {
+        if(stamina <= 500) {
+            stamina = 100000.0;
+        } else (health <= 500) {
+            health = 100000.0;
+        }
+
+        }
+
+    // Got to be benevolent
+    public void resurrectPlayer(Player name) {
+        health = 50.0;
+    }
+
+    // Create stuff
+    public void create() {
+        // Empty for now...
     }
 }
