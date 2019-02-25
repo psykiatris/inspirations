@@ -6,6 +6,7 @@ package org.palczewski.items;
 
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /*
@@ -40,11 +41,14 @@ public class Things {
             }
 
 
-        }
+    }
 
-    public void showItems() {
+    public final void showItems() {
+        int i = 1;
         for (String h : set) {
-            System.out.println(h);
+            System.out.println(i + ": " + h);
+            i++;
+
         }
     }
 

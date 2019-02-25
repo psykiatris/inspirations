@@ -19,8 +19,11 @@ public class PeopleTest {
         Pouch myFood = new Pouch("Apple");
         Bookbag myBag = new Bookbag("Bible");
 
-        myFood.showItems();
-        System.out.println();
+
+        myBag.addTo("Tract");
+        myBag.showItems();
+        // Remove
+        myBag.removeFrom("Bible");
         myBag.showItems();
 
 
