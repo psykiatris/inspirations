@@ -4,8 +4,9 @@
 
 package org.palczewski;
 
+import org.palczewski.items.Bookbag;
+import org.palczewski.items.Pouch;
 import org.palczewski.people.GameMaster;
-import org.palczewski.people.Player;
 
 public class PeopleTest {
 
@@ -14,7 +15,22 @@ public class PeopleTest {
         GameMaster p = new GameMaster("Patrick");
 
         p.getInfo();
-        p.loseStamina(90000);
-        p.getInfo();
+
+        Pouch myFood = new Pouch("Apple");
+        Bookbag myBag = new Bookbag("Bible");
+
+        myFood.showItems();
+        System.out.println();
+        myBag.showItems();
+
+
+
+
+
+
+
+
+
+
     }
 }

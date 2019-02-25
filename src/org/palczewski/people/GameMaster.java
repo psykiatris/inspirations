@@ -23,7 +23,7 @@ public class GameMaster extends Player {
     public void resurrect() {
         if(stamina <= 500) {
             stamina = 100000.0;
-        } else (health <= 500) {
+        } else if(health <= 500) {
             health = 100000.0;
         }
 
