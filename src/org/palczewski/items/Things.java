@@ -54,6 +54,30 @@ public class Things {
         }
     }
 
+    public void addQty(String s, int i) {
+        // Check if we have that item
+        if(set.containsKey(s)) {
+            int tmp = set.get(s);
+            set.replace(s, (tmp + i));
+        } else {
+            System.out.println(s + " cannot be found!");
+        }
+    }
+
+    public void removeQty(String s, int i) {
+        if(set.containsKey(s)) {
+            if(i <= (set.get(s))) {
+                int tmp = set.get(s);
+                set.replace(s, (tmp - i));
+            } else {
+                System.out.println("Too many quantities to remove, try " +
+                        "again.");
+            }
+        } else {
+            System.out.println(s + " cannot be found");
+        }
+    }
+
     @Override
     public String toString() {
         return "Things{" +
