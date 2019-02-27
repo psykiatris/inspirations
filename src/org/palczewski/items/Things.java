@@ -15,14 +15,14 @@ public class Things {
 
     Map<String, Integer> set = new HashMap<>(10);
 
-    public Things(String s, int i) {
+    Things(String s, int i) {
 
         // Initialize set with an item
         set.put(s, i);
         if(set.containsKey(s)) {
             System.out.println(s + " dded to " + this);
         } else {
-            System.out.println("Problem adding " + s + "to " + this);
+            System.out.println("Problem adding " + s + " to " + this);
         }
     }
 
@@ -40,6 +40,7 @@ public class Things {
         if(set.containsKey(s)) {
             if(set.containsValue(0)) {
                 set.remove(s);
+                System.out.println(s + " removed from " + this);
             } else {
                 System.out.println("Cannot remove " + s);
             }
@@ -53,6 +54,7 @@ public class Things {
 
     public final void showItems() {
         int i = 1;
+        System.out.println("Contents of " + this);
         for (Map.Entry<String, Integer> stringIntegerEntry : set.entrySet()) {
             System.out.println(i + ":\t" + stringIntegerEntry.getKey() + ": " + stringIntegerEntry.getValue());
             i++;
