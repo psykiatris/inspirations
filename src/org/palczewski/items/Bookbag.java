@@ -6,8 +6,14 @@ package org.palczewski.items;
 
 public class Bookbag extends Things {
 
+    public static final String name = "bookbag";
+
     public Bookbag(String s, int i) {
         // Initialize bookbag
         super(s, i);
+    }
+
+    public String toString() {
+        return name;
     }
 }

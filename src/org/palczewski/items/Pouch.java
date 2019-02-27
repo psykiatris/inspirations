@@ -7,6 +7,8 @@ package org.palczewski.items;
 
 public class Pouch extends Things {
 
+    public static final String name = "pounch";
+
     // Create Pouch collection
     public Pouch(String s, int i) {
         /*
@@ -14,5 +16,9 @@ public class Pouch extends Things {
          */
         super(s, i);
 
+    }
+
+    public String toString() {
+        return name;
     }
 }

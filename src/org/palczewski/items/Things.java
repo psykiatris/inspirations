@@ -20,9 +20,9 @@ public class Things {
         // Initialize set with an item
         set.put(s, i);
         if(set.containsKey(s)) {
-            System.out.println(s + " has been added.");
+            System.out.println(s + " dded to " + this);
         } else {
-            System.out.println("Problem adding " + s);
+            System.out.println("Problem adding " + s + "to " + this);
         }
     }
 
@@ -31,7 +31,7 @@ public class Things {
             addQty(s, i);
         } else {
             set.put(s, i);
-            System.out.println(s + " added");
+            System.out.println(s + " added to " + this);
         }
     }
 
