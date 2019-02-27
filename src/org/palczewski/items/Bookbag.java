@@ -6,8 +6,8 @@ package org.palczewski.items;
 
 public class Bookbag extends Things {
 
-    public Bookbag(String s) {
+    public Bookbag(String s, int i) {
         // Initialize bookbag
-        super(s);
+        super(s, i);
     }
 }

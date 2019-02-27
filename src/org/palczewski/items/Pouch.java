@@ -8,11 +8,11 @@ package org.palczewski.items;
 public class Pouch extends Things {
 
     // Create Pouch collection
-    public Pouch(String s) {
+    public Pouch(String s, int i) {
         /*
         Calls parent class and uses its hashSet object.
          */
-        super(s);
+        super(s, i);
 
     }
 }

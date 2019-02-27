@@ -5,6 +5,7 @@
 package org.palczewski;
 
 import org.palczewski.items.Bookbag;
+import org.palczewski.items.NameConstants;
 import org.palczewski.items.Pouch;
 import org.palczewski.people.GameMaster;
 
@@ -14,16 +15,15 @@ public class PeopleTest {
 
         GameMaster p = new GameMaster("Patrick");
 
-        p.getInfo();
 
-        Pouch myFood = new Pouch("Apple");
-        Bookbag myBag = new Bookbag("Bible");
+        Pouch myFood = new Pouch(NameConstants.APPLE, 1);
+        Bookbag myBag = new Bookbag(NameConstants.BIBLE, 1);
 
 
-        myBag.addTo("Tract");
+        myBag.addTo(NameConstants.TRACT, 100);
         myBag.showItems();
         // Remove
-        myBag.removeFrom("Bible");
+        myBag.removeFrom(NameConstants.BIBLE);
         myBag.showItems();
 
 
