@@ -22,15 +22,9 @@ public class PeopleTest {
 
         myBag.addTo(NameConstants.TRACT, 100);
         myBag.showItems();
-        // Remove qty
-        System.out.println();
-        myBag.addQty("Bible", 4);
-        myBag.showItems();
 
-        System.out.println();
-        // Now try to remove qty
-        myBag.removeQty(NameConstants.BIBLE, 4);
-
+        // Try to add duplicate
+        myBag.addTo(NameConstants.BIBLE, 2);
         myBag.showItems();
 
 

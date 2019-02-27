@@ -27,7 +27,12 @@ public class Things {
     }
 
     public void addTo(String s, int i) {
-        set.put(s, i);
+        if(set.containsKey(s)) {
+            addQty(s, i);
+        } else {
+            set.put(s, i);
+            System.out.println(s + " added");
+        }
     }
 
     public void removeFrom(String s) {
@@ -47,10 +52,10 @@ public class Things {
     }
 
     public final void showItems() {
-        Set<String> newSet = set.keySet();
         int i = 1;
-        for (String s : newSet) {
-            System.out.println(i + ":\t" + s + ": " + set.get(s));
+        for (Map.Entry<String, Integer> stringIntegerEntry : set.entrySet()) {
+            System.out.println(i + ":\t" + stringIntegerEntry.getKey() + ": " + stringIntegerEntry.getValue());
+            i++;
         }
     }
 
@@ -59,6 +64,7 @@ public class Things {
         if(set.containsKey(s)) {
             int tmp = set.get(s);
             set.replace(s, (tmp + i));
+            System.out.println("Added " + i + " to " + s);
         } else {
             System.out.println(s + " cannot be found!");
         }
@@ -69,6 +75,7 @@ public class Things {
             if(i <= (set.get(s))) {
                 int tmp = set.get(s);
                 set.replace(s, (tmp - i));
+                System.out.println("Removed " + i + " from " + s);
             } else {
                 System.out.println("Too many quantities to remove, try " +
                         "again.");
