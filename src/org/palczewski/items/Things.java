@@ -5,6 +5,8 @@
 package org.palczewski.items;
 
 
+import org.palczewski.LitCounter;
+
 import java.util.*;
 
 /*
@@ -85,6 +87,14 @@ public class Things {
         } else {
             System.out.println(s + " cannot be found");
         }
+    }
+
+    public void takeFrom(String s, i) {
+        /*
+        Attempt to remove item and quantity from LitCounter and add to
+        bookbag.
+         */
+
     }
 
     @Override

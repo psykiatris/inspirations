@@ -9,6 +9,7 @@ import org.palczewski.items.NameConstants;
 import org.palczewski.items.Pouch;
 import org.palczewski.people.GameMaster;
 
+
 public class PeopleTest {
 
     public static void main(String[] args) {
@@ -26,6 +27,11 @@ public class PeopleTest {
         // Try to add duplicate
         myBag.addTo(NameConstants.BIBLE, 2);
         myBag.showItems();
+        LitCounter h = new LitCounter();
+        h.stockLit();
+        h.listLit();
+
+
 
 
 
