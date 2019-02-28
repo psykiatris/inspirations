@@ -16,6 +16,8 @@ public class Bookbag extends Things {
     public Bookbag(String s, int i) {
         // Initialize bookbag
         super(s, i);
+        lc = new LitCounter();
+        lc.stockLit();
 
 
     }
@@ -23,10 +25,9 @@ public class Bookbag extends Things {
     public void getLit(String s, int i) {
         // Get from lit
         int res = lc.takeFrom(s, i);
-        int tmp = set.get(s);
-        set.replace(s, (tmp + res));
-        System.out.println("Received " + res + " from literature.");
+        addTo(s, res);
         lc.listLit();
+
 
     }
 

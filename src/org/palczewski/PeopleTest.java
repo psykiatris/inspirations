@@ -30,29 +30,9 @@ public class PeopleTest {
         myBag.addTo(NameConstants.BIBLE, 2);
         myBag.showItems();
 
-        // Stock literature
-        LitCounter lc = new LitCounter();
-        lc.stockLit();
+        myBag.getLit("Awake!", 10);
 
-        // TODO: 2/28/19 Figure out how to move objects from one map to another (i.e. LitCounter to myBag
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        myBag.showItems();
 
     }
 }
