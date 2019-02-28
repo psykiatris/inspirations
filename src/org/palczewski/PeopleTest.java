@@ -9,6 +9,8 @@ import org.palczewski.items.NameConstants;
 import org.palczewski.items.Pouch;
 import org.palczewski.people.GameMaster;
 
+import java.util.Map;
+
 
 public class PeopleTest {
 
@@ -27,9 +29,18 @@ public class PeopleTest {
         // Try to add duplicate
         myBag.addTo(NameConstants.BIBLE, 2);
         myBag.showItems();
-        LitCounter h = new LitCounter();
-        h.stockLit();
-        h.listLit();
+
+        // Stock literature
+        LitCounter lc = new LitCounter();
+        lc.stockLit();
+
+        // TODO: 2/28/19 Figure out how to move objects from one map to another (i.e. LitCounter to myBag
+
+
+
+
+
+
 
 
 

@@ -55,5 +55,17 @@ public class LitCounter {
         return "Literature Counter";
     }
 
+    public int takeFrom(String s, int i) {
+        if(lit.containsKey(s)) {
+            int tmp = lit.get(s);
+            lit.replace(s, (tmp - i));
+            return lit.get(s);
+        } else if ((lit.get(s).intValue()) == 0) {
+            System.out.println("No more " + s + " left.");
+            return 0;
+        }
+        return 0;
+    }
+
 
 }

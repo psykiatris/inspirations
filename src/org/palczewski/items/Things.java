@@ -89,13 +89,6 @@ public class Things {
         }
     }
 
-    public void takeFrom(String s, i) {
-        /*
-        Attempt to remove item and quantity from LitCounter and add to
-        bookbag.
-         */
-
-    }
 
     @Override
     public String toString() {
