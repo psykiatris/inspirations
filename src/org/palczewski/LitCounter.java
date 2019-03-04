@@ -10,13 +10,19 @@ import java.util.*;
 This is a class for the global literature counter. It will be available
 to all players and will be static.
 
-Will have its own methods and cannot be instantiated.
+Will have its own methods and is instantiated by the Bookbag class upon
+creation so that it is accessible.
  */
 public class LitCounter {
 
-    Map<String, Integer> lit = new HashMap<>(20);
+    Map<String, Integer> lit = new HashMap<>(10);
 
-    // Methods
+
+    /*
+    This "stocks" the lit counter. This can be run manually by the game
+    master or be assigned a TimerTask thread to run at intervals. If so,
+     it will be made private or protected.
+     */
     public void stockLit() {
         if(lit.isEmpty()) {
             lit.put("Bible", 100);
@@ -55,12 +61,18 @@ public class LitCounter {
         return "Literature Counter";
     }
 
+    /*
+    This is called by the Bookbag instance. It "virutlly" moves the
+    item, so that it appears to decrease the quantity here and increase
+    bag quantities there. This works until I learn how to move the
+    actual object from one to the other.
+     */
     public int takeFrom(String s, int i) {
         if(lit.containsKey(s)) {
             int tmp = lit.get(s);
             lit.replace(s, (tmp - i));
             return i;
-        } else if ((lit.get(s).intValue()) == 0) {
+        } else if ((lit.get(s)) == 0) {
             System.out.println("No more " + s + " left.");
             return 0;
         }
