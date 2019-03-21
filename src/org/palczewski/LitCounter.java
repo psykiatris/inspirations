@@ -12,6 +12,13 @@ to all players and will be static.
 
 Will have its own methods and is instantiated by the Bookbag class upon
 creation so that it is accessible.
+
+This will be run on  its own TimerTask to populate the store, as the
+"quantities" diminish. It is more virtual, as it is unknown how to
+actually move an object from one to the other.
+
+When the application is deployed, it will initialize this and will be
+available to any player that joins the game.
  */
 public class LitCounter {
 
@@ -55,6 +62,14 @@ public class LitCounter {
             i++;
         }
 
+    }
+
+    private void saveLitCounter() {
+        /*
+        This will periodically save the state of the lit counter to a
+        file in case the server stops abruptly or a catastrophic event
+        occurs.
+         */
     }
 
     public String toString() {
