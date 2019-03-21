@@ -22,7 +22,7 @@ public class Things {
         // Initialize set with an item
         set.put(s, i);
         if(set.containsKey(s)) {
-            System.out.println(s + " dded to " + this);
+            System.out.println(s + " added to " + this);
         } else {
             System.out.println("Problem adding " + s + " to " + this);
         }
