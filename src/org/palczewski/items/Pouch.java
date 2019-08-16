@@ -5,7 +5,7 @@
 package org.palczewski.items;
 
 
-public class Pouch extends Things {
+public class Pouch extends Bags {
 
     public static final String name = "pounch";
 

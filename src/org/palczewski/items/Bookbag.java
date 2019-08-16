@@ -6,7 +6,7 @@ package org.palczewski.items;
 
 import org.palczewski.LitCounter;
 
-public class Bookbag extends Things {
+public class Bookbag extends Bags {
 
     public static final String name = "bookbag";
     LitCounter lc;

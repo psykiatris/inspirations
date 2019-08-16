@@ -13,11 +13,11 @@ import java.util.*;
 Main class to handle inventory. The general methods will be defined here
  and inherited by the sub-classes.
  */
-public class Things {
+public class Bags {
 
     Map<String, Integer> set = new HashMap<>(10);
 
-    Things(String s, int i) {
+    Bags(String s, int i) {
 
         // Initialize set with an item
         set.put(s, i);
