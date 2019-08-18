@@ -7,7 +7,7 @@ package org.palczewski.items;
 
 public class Pouch extends Bags {
 
-    public static final String name = "pounch";
+    private static final String NAME = "pouch";
 
     // Create Pouch collection
     public Pouch(String s, int i) {
@@ -18,7 +18,7 @@ public class Pouch extends Bags {
 
     }
 
-    public String toString() {
-        return name;
+    public final String toString() {
+        return NAME;
     }
 }

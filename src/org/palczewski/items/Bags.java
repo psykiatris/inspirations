@@ -5,8 +5,6 @@
 package org.palczewski.items;
 
 
-import org.palczewski.LitCounter;
-
 import java.util.*;
 
 /*
@@ -15,29 +13,29 @@ Main class to handle inventory. The general methods will be defined here
  */
 public class Bags {
 
-    Map<String, Integer> set = new HashMap<>(10);
+    private Map<String, Integer> set = new HashMap<>(10);
 
     Bags(String s, int i) {
 
         // Initialize set with an item
         set.put(s, i);
         if(set.containsKey(s)) {
-            System.out.println(s + " added to " + this);
+            System.out.println(i + " " + s + " added to " + this);
         } else {
             System.out.println("Problem adding " + s + " to " + this);
         }
     }
 
-    public void addTo(String s, int i) {
+    public final void addTo(String s, int i) {
         if(set.containsKey(s)) {
             addQty(s, i);
         } else {
             set.put(s, i);
-            System.out.println(s + " added to " + this);
+            System.out.println(i + " " + s + " added to " + this);
         }
     }
 
-    public void removeFrom(String s) {
+    public final void removeFrom(String s) {
         // Test to see if contains
         if(set.containsKey(s)) {
             if(set.containsValue(0)) {
@@ -63,18 +61,18 @@ public class Bags {
         }
     }
 
-    public void addQty(String s, int i) {
+    private void addQty(String s, int i) {
         // Check if we have that item
         if(set.containsKey(s)) {
             int tmp = set.get(s);
             set.replace(s, (tmp + i));
-            System.out.println("Added " + i + " to " + s);
+            System.out.println("Added " + i + " " + s);
         } else {
             System.out.println(s + " cannot be found!");
         }
     }
 
-    public void removeQty(String s, int i) {
+    public final void removeQty(String s, int i) {
         if(set.containsKey(s)) {
             if(i <= (set.get(s))) {
                 int tmp = set.get(s);
@@ -95,6 +93,14 @@ public class Bags {
         return "Things{" +
                 "set=" + set +
                 '}';
+    }
+
+    public final Map<String, Integer> getSet() {
+        return set;
+    }
+
+    public final void setSet(Map<String, Integer> set) {
+        this.set = set;
     }
 }
 

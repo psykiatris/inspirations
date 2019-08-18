@@ -8,8 +8,9 @@ import org.palczewski.LitCounter;
 
 public class Bookbag extends Bags {
 
-    public static final String name = "bookbag";
-    LitCounter lc;
+    private static final String NAME = "bookbag";
+    // Create instance of LitCounter
+    private LitCounter lc;
 
 
 
@@ -31,8 +32,12 @@ public class Bookbag extends Bags {
 
     }
 
-    public String toString() {
-        return name;
+    /*
+    Overrides the toString method in the superclass to report name of
+    this class.
+     */
+    public final String toString() {
+        return NAME;
     }
 
 

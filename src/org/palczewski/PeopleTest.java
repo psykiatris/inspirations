@@ -21,6 +21,8 @@ public class PeopleTest {
 
         Pouch myFood = new Pouch(NameConstants.APPLE, 1);
         Bookbag myBag = new Bookbag(NameConstants.BIBLE, 1);
+        System.out.println(myFood);
+        System.out.println(myBag);
 
 
         myBag.addTo(NameConstants.TRACT, 100);
