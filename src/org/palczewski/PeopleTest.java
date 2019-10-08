@@ -5,14 +5,22 @@
 package org.palczewski;
 
 import org.palczewski.items.Bookbag;
+import org.palczewski.items.Inventory;
 import org.palczewski.items.NameConstants;
 import org.palczewski.items.Pouch;
 import org.palczewski.people.GameMaster;
+import org.palczewski.people.Player;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class PeopleTest {
+
+    private static final Map<Player, Inventory> player =
+            new LinkedHashMap<>(10);
 
     public static void main(String[] args) {
 
@@ -21,20 +29,27 @@ public class PeopleTest {
 
         Pouch myFood = new Pouch(NameConstants.APPLE, 1);
         Bookbag myBag = new Bookbag(NameConstants.BIBLE, 1);
-        System.out.println(myFood);
-        System.out.println(myBag);
+        Inventory stuff = new Inventory(myFood, myBag);
 
 
-        myBag.addTo(NameConstants.TRACT, 100);
-        myBag.showItems();
 
-        // Try to add duplicate
-        myBag.addTo(NameConstants.BIBLE, 2);
-        myBag.showItems();
 
-        myBag.getLit("Awake!", 10);
+        player.put(p, stuff);
 
-        myBag.showItems();
+        // Traverse set
+        Set<Player> set = player.keySet();
+        for (Player value : set) {
+            value.getInfo();
+
+        }
+
+
+
+
+
+
+
+
 
     }
 }

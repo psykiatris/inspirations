@@ -9,11 +9,11 @@ This will be a basic player class.
 public class Player {
 
     // Basic to players
-    public String name;
-    double health;
-    double stamina;
+    private final String name;
+    private double health;
+    private double stamina;
 
-    public Player(String name) {
+    Player(String name) {
 
         // Sets name and assigns stats
         this.name = name;
