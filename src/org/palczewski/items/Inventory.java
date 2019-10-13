@@ -25,9 +25,9 @@ public class Inventory {
         inventory.addAll(tmpBag.keySet());
 
     }
-
-    @Override
     public final String toString() {
-        return String.format("\tInventory: %s:", inventory);
+        return String.format("\tInventory: %s", inventory);
     }
+
+
 }

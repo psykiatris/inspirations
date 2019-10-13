@@ -44,7 +44,8 @@ public class PeopleTest {
         // Traverse set
         Set<Map.Entry<Player, Inventory>> set = player.entrySet();
         for (Map.Entry<Player, Inventory> value : set) {
-            System.out.println(value.toString());
+            System.out.println(value.getKey());
+            System.out.println(value.getValue());
         }
 
 

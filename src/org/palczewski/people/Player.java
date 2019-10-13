@@ -26,9 +26,9 @@ public class Player {
     public final void getInfo() {
 
         System.out.println("Player Info:");
-        System.out.println("\tName: " + name);
-        System.out.println("\tStamina: " + stamina);
-        System.out.println("\tHealth: " + health);
+        System.out.printf("\tName: %s%n", name);
+        System.out.printf("\tStamina: %s%n", stamina);
+        System.out.printf("\tHealth: %s%n", health);
     }
 
     // Getters and setters
@@ -61,13 +61,14 @@ public class Player {
         stamina += i;
     }
 
-    public void loseStamina(double i) {
+    public final void loseStamina(double i) {
         stamina -= i;
     }
 
 
     @Override
-    public String toString() {
-        return String.format("Player: %s\n\tStamina: %s\n\tHealth: %s\n", name, stamina, health);
+    public final String toString() {
+        return String.format("Player: %s\n\tStamina: %.0f\n\tHealth: %.0f",
+                name, stamina, health);
     }
 }
