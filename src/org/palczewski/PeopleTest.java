@@ -32,6 +32,7 @@ public class PeopleTest {
         Pouch myFood = new Pouch(NameConstants.APPLE, 1);
         Bookbag myBag = new Bookbag(NameConstants.BIBLE, 1);
         Pouch herPouch = new Pouch(NameConstants.APPLE, 2);
+        herPouch.addTo("Kimchi", 1);
         Bookbag herBag = new Bookbag(NameConstants.TRACT, 100);
         Inventory stuff = new Inventory(myFood, myBag);
         Inventory gloriaStuff = new Inventory(herPouch, herBag);
@@ -41,11 +42,9 @@ public class PeopleTest {
         player.put(g, gloriaStuff);
 
         // Traverse set
-        Set<Player> set = player.keySet();
-        for (Player value : set) {
-            value.getInfo();
-
-
+        Set<Map.Entry<Player, Inventory>> set = player.entrySet();
+        for (Map.Entry<Player, Inventory> value : set) {
+            System.out.println(value.toString());
         }
 
 

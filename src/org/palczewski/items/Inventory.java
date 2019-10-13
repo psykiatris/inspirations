@@ -4,8 +4,7 @@
 
 package org.palczewski.items;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /*
 Simple class that contains both Pouch and Bookbag objects to attach to
@@ -13,17 +12,22 @@ Player
  */
 public class Inventory {
 
-    private final Map<Pouch, Bookbag> inventory =
-            new LinkedHashMap<>(10);
+    private final List<String> inventory =
+            new LinkedList<>();
 
     public Inventory(Pouch pouch, Bookbag bag) {
+        /*
+        Get the keys to store item names in inventory
+         */
+        Map<String, Integer> tmpPouch = pouch.getSet();
+        Map<String, Integer> tmpBag = bag.getSet();
+        inventory.addAll(tmpPouch.keySet());
+        inventory.addAll(tmpBag.keySet());
 
-        inventory.put(pouch, bag);
     }
 
-    private void showInventory() {
-
-        //
+    @Override
+    public final String toString() {
+        return String.format("\tInventory: %s:", inventory);
     }
-
 }

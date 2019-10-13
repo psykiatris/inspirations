@@ -18,7 +18,7 @@ public class GameMaster extends Player {
     }
 
     /*
-    in the off-chance a player decides to fight the GameMaster...
+    in the off-chance a player dares to fight the GameMaster...
      */
     public void resurrect() {
         if(getStamina() <= 500) {

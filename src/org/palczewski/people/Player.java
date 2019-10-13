@@ -23,7 +23,7 @@ public class Player {
     }
 
 
-    public void getInfo() {
+    public final void getInfo() {
 
         System.out.println("Player Info:");
         System.out.println("\tName: " + name);
@@ -32,32 +32,32 @@ public class Player {
     }
 
     // Getters and setters
-    public void setStamina(double stamina) {
+    final void setStamina(double stamina) {
         this.stamina = stamina;
     }
 
-    public double getStamina() {
+    final double getStamina() {
         return stamina;
     }
 
-    public void setHealth(double health) {
+    final void setHealth(double health) {
         this.health = health;
     }
 
-    public double getHealth() {
+    final double getHealth() {
         return health;
     }
 
-    public void gainHealth(double i) {
+    public final void gainHealth(double i) {
         health += i;
 
     }
 
-    public void loseHealth(double i) {
+    public final void loseHealth(double i) {
         health -= i;
     }
 
-    public void gainStamina(double i) {
+    public final void gainStamina(double i) {
         stamina += i;
     }
 
@@ -66,4 +66,8 @@ public class Player {
     }
 
 
+    @Override
+    public String toString() {
+        return String.format("Player: %s\n\tStamina: %s\n\tHealth: %s\n", name, stamina, health);
+    }
 }
