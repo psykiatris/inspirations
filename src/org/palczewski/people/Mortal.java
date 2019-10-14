@@ -8,7 +8,6 @@ public class Mortal extends Player  {
 
     public Mortal(String name) {
         super(name);
-        setHealth(100);
-        setStamina(100);
+
     }
 }

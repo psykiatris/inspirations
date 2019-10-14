@@ -17,9 +17,6 @@ public class Bookbag extends Bags {
     public Bookbag(String s, int i) {
         // Initialize bookbag
         super(s, i);
-        lc = new LitCounter();
-        lc.stockLit();
-
 
     }
 

@@ -24,7 +24,9 @@ public class Inventory {
         inventory.addAll(tmpPouch.keySet());
         inventory.addAll(tmpBag.keySet());
 
+
     }
+
     public final String toString() {
         return String.format("\tInventory: %s", inventory);
     }
