@@ -17,8 +17,8 @@ public class Player {
 
     // Basic to players
     private final String name;
-    public Bookbag bag;
-    public Pouch pouch;
+    private final Bookbag bag;
+    private final Pouch pouch;
     private double health;
     private double stamina;
 
@@ -104,7 +104,7 @@ public class Player {
 
     public final void addToBag(String name, int qty) {
         bag.addTo(name, qty);
-        inventory.updateInventory(pouch, bag);
+        inventory.updateInventory(name);
 
     }
 

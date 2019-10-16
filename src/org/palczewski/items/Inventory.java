@@ -25,28 +25,18 @@ public class Inventory {
         inventory.addAll(tmpPouch.keySet());
         inventory.addAll(tmpBag.keySet());
 
+
     }
 
     // Update inventory
-    public final List<String> updateInventory(Pouch p, Bookbag b) {
-
-        Map<String, Integer> tmpPouch = p.getSet();
-        Map<String, Integer> tmpBag = b.getSet();
-        inventory.addAll(tmpPouch.keySet());
-        inventory.addAll(tmpBag.keySet());
-
-
-
-
-
+    public final List<String> updateInventory(String name) {
+        int tmp = inventory.size();
+        if(!inventory.contains(name))
+            inventory.add(tmp -1, name);
+        // Maintain list order
+        Collections.sort(inventory);
 
         return Collections.unmodifiableList(inventory);
-
-
-
-
-
-
     }
 
     public final String toString() {
