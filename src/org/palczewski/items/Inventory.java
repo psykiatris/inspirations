@@ -4,6 +4,7 @@
 
 package org.palczewski.items;
 
+import java.io.LineNumberReader;
 import java.util.*;
 
 /*
@@ -23,6 +24,27 @@ public class Inventory {
         Map<String, Integer> tmpBag = bag.getSet();
         inventory.addAll(tmpPouch.keySet());
         inventory.addAll(tmpBag.keySet());
+
+    }
+
+    // Update inventory
+    public final List<String> updateInventory(Pouch p, Bookbag b) {
+
+        Map<String, Integer> tmpPouch = p.getSet();
+        Map<String, Integer> tmpBag = b.getSet();
+        inventory.addAll(tmpPouch.keySet());
+        inventory.addAll(tmpBag.keySet());
+
+
+
+
+
+
+        return Collections.unmodifiableList(inventory);
+
+
+
+
 
 
     }

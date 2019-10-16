@@ -5,6 +5,7 @@
 package org.palczewski;
 
 import org.palczewski.people.GameMaster;
+import org.palczewski.people.Mortal;
 
 
 public class PeopleTest {
@@ -14,6 +15,13 @@ public class PeopleTest {
 
         GameMaster p = new GameMaster("Patrick");
         p.listPlayers();
+        Mortal g = new Mortal("Gloria");
+        g.addToBag("Tract", 100);
+        g.listPlayers();
+
+
+
+
 
 
 

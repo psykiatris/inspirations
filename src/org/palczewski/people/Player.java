@@ -4,10 +4,7 @@
 
 package org.palczewski.people;
 
-import org.palczewski.items.Bookbag;
-import org.palczewski.items.Inventory;
-import org.palczewski.items.NameConstants;
-import org.palczewski.items.Pouch;
+import org.palczewski.items.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,12 +17,15 @@ public class Player {
 
     // Basic to players
     private final String name;
+    public Bookbag bag;
+    public Pouch pouch;
     private double health;
     private double stamina;
 
     // Object that contains Player and inventory
     private static final Map<Player, Inventory> player =
             new LinkedHashMap<>(10);
+    private final Inventory inventory;
 
     Player(String name) {
 
@@ -34,10 +34,10 @@ public class Player {
         stamina = 100;
         health = 100;
         // Initialzise inventory
-        Bookbag bag = new Bookbag(NameConstants.BIBLE, 1);
-        Pouch pouch = new Pouch(NameConstants.APPLE, 1);
+        bag = new Bookbag(NameConstants.BIBLE, 1);
+        pouch = new Pouch(NameConstants.APPLE, 1);
         // Store items in inventory
-        Inventory inventory = new Inventory(pouch, bag);
+        inventory = new Inventory(pouch, bag);
         player.put(this, inventory);
 
     }
@@ -99,6 +99,12 @@ public class Player {
         Saves to Player object when info changes (stamina, health,
         // inventory)
          */
+
+    }
+
+    public final void addToBag(String name, int qty) {
+        bag.addTo(name, qty);
+        inventory.updateInventory(pouch, bag);
 
     }
 
