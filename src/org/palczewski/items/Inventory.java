@@ -4,12 +4,12 @@
 
 package org.palczewski.items;
 
-import java.io.LineNumberReader;
 import java.util.*;
 
 /*
-Simple class that contains both Pouch and Bookbag objects to attach to
-Player
+This class defines a means of including the Pouch and Bookbag object
+into a list for display when information about a player is requested. It
+ maintains sort [A-Z] order.
  */
 public class Inventory {
 
@@ -18,7 +18,7 @@ public class Inventory {
 
     public Inventory(Pouch pouch, Bookbag bag) {
         /*
-        Get the keys to store item names in inventory
+        Initializes with getting current Bookbag and Pouch keys.
          */
         Map<String, Integer> tmpPouch = pouch.getSet();
         Map<String, Integer> tmpBag = bag.getSet();
@@ -28,10 +28,9 @@ public class Inventory {
 
     }
 
-    // Update inventory
     public final List<String> addInventory(String name) {
         /*
-        Add items from the inventory list upon
+        Add items to the inventory list upon
         addition to bookbag or pouch
          */
         int tmp = inventory.size();
@@ -43,23 +42,23 @@ public class Inventory {
         return Collections.unmodifiableList(inventory);
     }
 
-    public final String toString() {
-        return String.format("\tInventory: %s", inventory);
-    }
-
     public final List<String> removeInventory(String name) {
-        /*
-        Removes items from list when items are deleted from bookbag or
-        pouch,
-         */
-        if(inventory.contains(name))
-            inventory.remove(name);
 
+        // Already tested via Player call
+        inventory.remove(name);
+
+        // Maintain list order
         Collections.sort(inventory);
 
         return Collections.unmodifiableList(inventory);
 
     }
+
+    public final String toString() {
+        return String.format("\tInventory: %s", inventory);
+    }
+
+
 
 
 }

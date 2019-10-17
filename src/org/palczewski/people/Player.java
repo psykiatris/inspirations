@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 /*
-This will be a basic player class.
+A basic Player class. Provides supertype for subclasses with easy access
+ to its methods.
  */
 public class Player {
 
@@ -27,9 +28,14 @@ public class Player {
             new LinkedHashMap<>(10);
     private final Inventory inventory;
 
+    /*
+    Cannot be instantiated outside its package. Built-in subclasses are
+    used to provide public access. Sublass the subclasses to define your
+     own player types.
+     */
     Player(String name) {
 
-        // Sets name and assigns stats
+        // Sets name and assigns basic stats
         this.name = name;
         stamina = 100;
         health = 100;
@@ -42,7 +48,7 @@ public class Player {
 
     }
 
-    public void listPlayers() {
+    public final void listPlayers() {
         Set<Map.Entry<Player, Inventory>> set = player.entrySet();
         for (Map.Entry<Player, Inventory> value : set) {
             System.out.println(value.getKey());
@@ -52,7 +58,7 @@ public class Player {
 
 
     public final void getInfo() {
-
+        // Get info about a player
         System.out.println("Player Info:");
         System.out.printf("\tName: %s%n", name);
         System.out.printf("\tStamina: %s%n", stamina);
@@ -77,19 +83,23 @@ public class Player {
     }
 
     public final void gainHealth(double i) {
+        // When a player eats or drinks
         health += i;
 
     }
 
     public final void loseHealth(double i) {
+        // When a player is active
         health -= i;
     }
 
     public final void gainStamina(double i) {
+        // When a player rests for a time
         stamina += i;
     }
 
     public final void loseStamina(double i) {
+        // When a player is busy
         stamina -= i;
     }
 
@@ -99,12 +109,21 @@ public class Player {
         Saves to Player object when info changes (stamina, health,
         // inventory)
          */
+        // Possibly used when saving player for persistence.
 
     }
 
     public final void addToBag(String name, int qty) {
+        /*
+        Calls Bags add method
+
+         */
         bag.addTo(name, qty);
-        inventory.addInventory(name);
+        // Ensure item really added
+        Map<String, Integer> tmp = bag.getSet();
+        if(tmp.containsKey(name))
+            inventory.addInventory(name);
+
 
     }
 
@@ -123,16 +142,22 @@ public class Player {
 
     public final void addToPouch(String name, int qty) {
         /*
-        Calls pouch remove
+        Calls pouch add
          */
         pouch.addTo(name, qty);
-        inventory.addInventory(name);
+        Map<String, Integer> tmp = pouch.getSet();
+        if(tmp.containsKey(name))
+            inventory.addInventory(name);
+
     }
 
     public final void removeFromPouch(String name) {
         /*
         Uses removeFrom()
+        Will update only if item has the quantity of 0 and is truly
+        deleted from the pouch.
          */
+        // TODO: 10/16/19 Can further generify if I use "this" keyword? 
         pouch.removeFrom(name);
         Map<String, Integer> tmp = pouch.getSet();
         if(!tmp.containsKey(name))
