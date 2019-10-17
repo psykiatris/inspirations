@@ -29,7 +29,11 @@ public class Inventory {
     }
 
     // Update inventory
-    public final List<String> updateInventory(String name) {
+    public final List<String> addInventory(String name) {
+        /*
+        Add items from the inventory list upon
+        addition to bookbag or pouch
+         */
         int tmp = inventory.size();
         if(!inventory.contains(name))
             inventory.add(tmp -1, name);
@@ -41,6 +45,20 @@ public class Inventory {
 
     public final String toString() {
         return String.format("\tInventory: %s", inventory);
+    }
+
+    public final List<String> removeInventory(String name) {
+        /*
+        Removes items from list when items are deleted from bookbag or
+        pouch,
+         */
+        if(inventory.contains(name))
+            inventory.remove(name);
+
+        Collections.sort(inventory);
+
+        return Collections.unmodifiableList(inventory);
+
     }
 
 

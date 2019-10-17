@@ -104,7 +104,40 @@ public class Player {
 
     public final void addToBag(String name, int qty) {
         bag.addTo(name, qty);
-        inventory.updateInventory(name);
+        inventory.addInventory(name);
+
+    }
+
+    public final void removeFromBag(String name) {
+        /*
+        calls bags remove
+         */
+        bag.removeFrom(name);
+        Map<String, Integer> tmp = bag.getSet();
+        // Checks main map
+        // to ensure item really deleted.
+        if(!tmp.containsKey(name))
+            inventory.removeInventory(name);
+
+    }
+
+    public final void addToPouch(String name, int qty) {
+        /*
+        Calls pouch remove
+         */
+        pouch.addTo(name, qty);
+        inventory.addInventory(name);
+    }
+
+    public final void removeFromPouch(String name) {
+        /*
+        Uses removeFrom()
+         */
+        pouch.removeFrom(name);
+        Map<String, Integer> tmp = pouch.getSet();
+        if(!tmp.containsKey(name))
+            inventory.removeInventory(name);
+
 
     }
 

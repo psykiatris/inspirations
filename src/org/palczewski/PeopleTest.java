@@ -18,7 +18,7 @@ public class PeopleTest {
         Mortal g = new Mortal("Gloria");
         g.addToBag("Tract", 100);
         g.listPlayers();
-        g.addToBag("Bible", 2);
+        g.removeFromPouch("Apple");
         g.listPlayers();
 
 
