@@ -26,6 +26,8 @@ public class Inventory {
         inventory.addAll(tmpBag.keySet());
 
 
+
+
     }
 
     public final List<String> addInventory(String name) {
@@ -52,6 +54,10 @@ public class Inventory {
 
         return Collections.unmodifiableList(inventory);
 
+    }
+
+    public final void getInventory() {
+        inventory.forEach(String::toString);
     }
 
     public final String toString() {

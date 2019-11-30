@@ -48,6 +48,11 @@ public class Player {
 
     }
 
+    public final String getName() {
+        return name;
+
+    }
+
     public final void listPlayers() {
         Set<Map.Entry<Player, Inventory>> set = player.entrySet();
         for (Map.Entry<Player, Inventory> value : set) {
